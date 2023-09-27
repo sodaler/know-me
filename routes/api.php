@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\v1\OAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1/oauth'], function () {
+    Route::post('login', [OAuthController::class, 'login'])->name('login');
+    Route::post('refresh', [OAuthController::class, 'refresh'])->name('refresh');
+    Route::post('register', [OAuthController::class, 'register'])->name('register');
+});
+
+Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
+    Route::post('logout', [OAuthController::class, 'logout'])->name('logout');
 });
