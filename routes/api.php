@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\v1\OAuthController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
+//    Route::post('login', [AuthController::class, 'login']);
+//    Route::post('register', [AuthController::class, 'register']);
+//    Route::post('logout', [AuthController::class, 'logout']);
+//    Route::post('refresh', [AuthController::class, 'refresh']);
+//    Route::post('me', [AuthController::class, 'me']);
+//});
+//
+//
+//Route::middleware('jwt.auth')->get('hello', function () {
+//    return 1111;
+//});
+
+Route::group(['prefix' => 'v1/oauth'], function () {
+    Route::post('token', [OAuthController::class, 'token'])->name('token');
+    Route::post('login', [OAuthController::class, 'login'])->name('login');
+    Route::post('refresh', [OAuthController::class, 'refresh'])->name('refresh');
+    Route::post('register', [OAuthController::class, 'register'])->name('register');
+    Route::post('logout', [OAuthController::class, 'logout'])->name('logout');
+});
+
+Route::get('hello', function () {
+   return 111;
 });
