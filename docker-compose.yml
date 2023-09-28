@@ -12,7 +12,7 @@ services:
                 - UID=${UID:-1000}
                 - GID=${GID:-1000}
         ports:
-            - "80:80"
+            - "8878:80"
         volumes:
             - ./:/var/www/html:delegated
         depends_on:
@@ -28,7 +28,7 @@ services:
         restart: unless-stopped
         tty: true
         ports:
-            - "3306:3306"
+            - "8109:3306"
         volumes:
             - ./mysql:/var/lib/mysql
         environment:
