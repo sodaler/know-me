@@ -13,8 +13,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Laravel\Passport\Exceptions\AuthenticationException;
-use Laravel\Passport\Exceptions\OAuthServerException;
 use Symfony\Component\HttpFoundation\Response;
 
 class OAuthController extends Controller

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class AuthService
 {
-    public function generateTokens(array $data, string $method, string $type): Request
+    public function generateTokens(array $credentials, string $method, string $type): Request
     {
-        $data = array_merge($data, $this->getClientData(), ['grant_type' => $type, 'scope' => '']);
+        $data = array_merge($credentials, $this->getClientData(), ['grant_type' => $type, 'scope' => '']);
 
         return Request::create('/oauth/token', $method, $data);
     }
