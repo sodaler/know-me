@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\OAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,5 @@ Route::group(['prefix' => 'v1/oauth'], function () {
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
     Route::post('logout', [OAuthController::class, 'logout'])->name('logout');
 });
+
+Route::apiResource('category', CategoryController::class);
