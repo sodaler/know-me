@@ -17,8 +17,11 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title,
-            'description' => $this->faker->text
+            'title' => $this->faker->text(40),
+            'description' => $this->faker->text,
+            'image' => $this->faker->imageUrl,
+            'image_alt' => $this->faker->slug,
+            'rating' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

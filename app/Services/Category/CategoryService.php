@@ -3,6 +3,7 @@
 namespace App\Services\Category;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryService
 {
@@ -10,6 +11,7 @@ class CategoryService
     {
         $skills = $this->getSkillIds($data);
 
+        $data['image'] = Storage::disk('public')->put('/category', $data['image']);
         $category = Category::createOrFail($data);
         $category->skills()->attach($skills);
 

@@ -19,6 +19,10 @@ class CategoryResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'skills' => SkillResource::collection($this->whenLoaded('skills')),
+            'slug' => $this->slug,
+            'rating' => $this->rating,
+            'image' => $this->image,
+            'image_alt' => $this->image_alt
         ];
     }
 }
