@@ -11,7 +11,7 @@ use PhpParser\Node\Expr\AssignOp\Mod;
 class DatabaseSeeder extends Seeder
 {
     protected array $toTruncate = [
-        'users', 'categories', 'skills'
+        'users', 'categories', 'skills', 'category_skill'
     ];
 
     /**

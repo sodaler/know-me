@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\MoonShine\Resources\CategoryResource;
+use App\MoonShine\Resources\SkillResource;
 use Illuminate\Support\ServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -24,7 +25,8 @@ class MoonShineServiceProvider extends ServiceProvider
                     ->icon('bookmark'),
             ])->translatable(),
 
-            MenuItem::make('Categories', new CategoryResource())
+            MenuItem::make('Categories', new CategoryResource()),
+            MenuItem::make('Skills', new SkillResource()),
         ]);
     }
 }

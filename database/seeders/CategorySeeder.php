@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::factory()
-            ->has(Skill::factory())
+            ->hasSkills(3)
             ->count(10)
             ->create();
     }
