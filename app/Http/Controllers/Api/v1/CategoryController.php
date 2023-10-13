@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\Category\CategoryWithCardsResource;
 use App\Models\Category;
 use App\Services\Category\CategoryService;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +23,7 @@ class CategoryController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $categories = Category::with(['skills'])->get();
+        $categories = Category::paginate(10);
 
         return CategoryResource::collection($categories);
     }
@@ -42,9 +43,9 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category): CategoryResource
+    public function show(Category $category): CategoryWithCardsResource
     {
-        return new CategoryResource($category);
+        return new CategoryWithCardsResource($category->load(['cards.user']));
     }
 
     /**

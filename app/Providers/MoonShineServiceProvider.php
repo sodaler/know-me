@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\MoonShine\Resources\CardResource;
 use App\MoonShine\Resources\CategoryResource;
 use App\MoonShine\Resources\SkillResource;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,7 @@ class MoonShineServiceProvider extends ServiceProvider
 
             MenuItem::make('Categories', new CategoryResource()),
             MenuItem::make('Skills', new SkillResource()),
+            MenuItem::make('Cards', new CardResource()),
         ]);
     }
 }

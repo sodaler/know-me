@@ -5,10 +5,11 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Skill;
 use Database\Factories\CategoryFactory;
+use Database\Factories\SkillFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class SkillSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,9 +21,6 @@ class CategorySeeder extends Seeder
 //            ->count(10)
 //            ->create();
 
-        Category::factory()
-            ->hasAttached(Skill::query()->inRandomOrder()->take(rand(1, 3))->get())
-            ->count(10)
-            ->create();
+        SkillFactory::new()->count(20)->create();
     }
 }

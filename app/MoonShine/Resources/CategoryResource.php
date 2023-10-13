@@ -23,7 +23,7 @@ class CategoryResource extends Resource
 
     public static string $orderField = 'id';
 
-    public static array $with = ['skills'];
+    public static array $with = ['skills', 'users'];
 
 	public function fields(): array
 	{
@@ -33,7 +33,9 @@ class CategoryResource extends Resource
                 Text::make('Title'),
                 Text::make('Description')->hideOnIndex(),
                 BelongsToMany::make('Skills', 'skills', 'title')
-                    ->inLine(separator: ' ', badge: true)
+                    ->inLine(separator: ' ', badge: true)->select(),
+                BelongsToMany::make('Users', 'users', 'name')
+                    ->inLine(separator: ' ', badge: true)->select()
             ])
         ];
 	}

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\SkillResource;
-use App\Models\Category;
+use App\Http\Resources\Skill\SkillResource;
 use App\Models\Skill;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class SkillController extends Controller

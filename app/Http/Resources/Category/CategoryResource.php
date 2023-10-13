@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Category;
 
+use App\Http\Resources\Card\CardResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SkillResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +19,9 @@ class SkillResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'categories' => CategoryResource::collection($this->whenLoaded('categories')),
+            'slug' => $this->slug,
+            'image' => $this->image,
+            'alt' => $this->image_alt
         ];
     }
 }

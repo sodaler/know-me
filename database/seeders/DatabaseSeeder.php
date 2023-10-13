@@ -11,7 +11,8 @@ use PhpParser\Node\Expr\AssignOp\Mod;
 class DatabaseSeeder extends Seeder
 {
     protected array $toTruncate = [
-        'users', 'categories', 'skills', 'category_skill'
+        'users', 'categories', 'skills', 'category_skill',
+        'category_user', 'skill_user', 'cards', 'card_skill', 'card_category',
     ];
 
     /**
@@ -25,7 +26,12 @@ class DatabaseSeeder extends Seeder
             DB::table($table)->delete();
         }
 
-        $this->call([UserSeeder::class, CategorySeeder::class]);
+        $this->call([
+            SkillSeeder::class,
+            CategorySeeder::class,
+            UserSeeder::class,
+            CardSeeder::class,
+        ]);
 
         Model::reguard();
     }

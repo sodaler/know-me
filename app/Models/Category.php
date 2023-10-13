@@ -27,6 +27,16 @@ class Category extends Model
         return $this->belongsToMany(Skill::class);
     }
 
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function cards(): BelongsToMany
+    {
+        return $this->belongsToMany(Card::class);
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

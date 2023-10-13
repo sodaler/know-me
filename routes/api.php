@@ -27,9 +27,12 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
-    Route::apiResource('category', CategoryController::class);
-//    Route::get('skill', [SkillController::class, 'index'])->name('skill.index');
+//    Route::apiResource('category', CategoryController::class);
+    Route::get('skill', [SkillController::class, 'index'])->name('skill.index');
     Route::get('skill/{skill}', [SkillController::class, 'show'])->name('skill.show');
 });
 
-Route::get('skill', [SkillController::class, 'index'])->name('skill.index');
+Route::apiResource('category', CategoryController::class);
+
+Route::get('card', [\App\Http\Controllers\Api\v1\CardController::class, 'index']);
+Route::get('card/{card}', [\App\Http\Controllers\Api\v1\CardController::class, 'show']);
