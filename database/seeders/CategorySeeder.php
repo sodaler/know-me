@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Skill;
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +15,13 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+//        Category::factory()
+//            ->hasAttached(Skill::query()->inRandomOrder()->get())
+//            ->count(10)
+//            ->create();
+
         Category::factory()
-            ->has(Skill::factory())
+            ->hasAttached(Skill::query()->inRandomOrder()->take(rand(1, 3))->get())
             ->count(10)
             ->create();
     }

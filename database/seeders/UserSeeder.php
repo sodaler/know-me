@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Skill;
 use App\Models\User;
+use Database\Factories\CategoryFactory;
 use Database\Factories\SkillFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,8 +17,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+//        User::factory()
+//            ->has(Skill::factory())
+//            ->has(Category::factory())
+//            ->count(10)
+//            ->create();
+
         User::factory()
-            ->has(Skill::factory())
+            ->hasAttached(Category::query()->inRandomOrder()->take(rand(1, 3))->get())
+            ->hasAttached(Skill::query()->inRandomOrder()->take(rand(1, 3))->get())
             ->count(10)
             ->create();
     }
