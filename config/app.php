@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\MoonShineServiceProvider::class,
+        \MongoDB\Laravel\MongoDBServiceProvider::class,
     ])->toArray(),
 
     /*

@@ -9,10 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use MongoDB\Laravel\Eloquent\HybridRelations;
+use MongoDB\Laravel\Relations\HasMany as HasManyMongo;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HybridRelations;
+
+    protected $connection = 'mysql';
 
     /**
      * The attributes that are mass assignable.
@@ -58,5 +62,15 @@ class User extends Authenticatable
     public function cards(): HasMany
     {
         return $this->hasMany(Card::class);
+    }
+
+    public function messagesSent(): HasManyMongo
+    {
+        return $this->hasMany(Message::class, 'to_id', 'id');
+    }
+
+    public function messagesReceived(): HasManyMongo
+    {
+        return $this->hasMany(Message::class, 'from_id', 'id');
     }
 }
