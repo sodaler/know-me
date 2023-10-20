@@ -19,4 +19,4 @@ yarn-error.log
 /.vscode
 /mysql
 /public/vendor
-/storage/mongodb
+/storage/docker
