@@ -110,3 +110,20 @@ services:
             - "8025:8025"
         networks:
             - laravel
+
+    mongo:
+        image: mongo
+        container_name: mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+        restart: unless-stopped
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./storage/docker/mongodb/db:/data/db
+            - ./storage/docker/mongodb/dev.archive:/Databases/dev.archive
+            - ./storage/docker/mongodb/production:/Databases/production
+        command: [ --auth ]
+        networks:
+            laravel:
