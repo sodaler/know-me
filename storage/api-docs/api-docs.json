@@ -6,6 +6,583 @@
     },
     "paths": {
         "/api/": {},
+        "/api/v1/category": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "title example"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "description example"
+                                            },
+                                            "tag_ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": ""
+                                                },
+                                                "example": "1, 2, 3"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "title example"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "description example"
+                                                },
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "firstname example"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "lastname example"
+                                                },
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2023-07-18"
+                                                },
+                                                "group": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "title": {
+                                                            "type": "string",
+                                                            "example": "group title"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "role": {
+                                                    "properties": {
+                                                        "role": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "roleHuman": {
+                                                            "type": "string",
+                                                            "example": "Student"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "address": {
+                                                    "properties": {
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "moscow"
+                                                        },
+                                                        "street": {
+                                                            "type": "string",
+                                                            "example": "lenina"
+                                                        },
+                                                        "house": {
+                                                            "type": "integer",
+                                                            "example": 10
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/students": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Index",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "title example"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "description example"
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "firstname example"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "lastname example"
+                                                    },
+                                                    "birthday": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2023-07-18"
+                                                    },
+                                                    "group": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "group title"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "role": {
+                                                        "properties": {
+                                                            "role": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "roleHuman": {
+                                                                "type": "string",
+                                                                "example": "Student"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "address": {
+                                                        "properties": {
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "moscow"
+                                                            },
+                                                            "street": {
+                                                                "type": "string",
+                                                                "example": "lenina"
+                                                            },
+                                                            "house": {
+                                                                "type": "integer",
+                                                                "example": 10
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/students/{student}": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Show",
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "description": "Student's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "title example"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "description example"
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "firstname example"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "lastname example"
+                                                    },
+                                                    "birthday": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2023-07-18"
+                                                    },
+                                                    "group": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "group title"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "role": {
+                                                        "properties": {
+                                                            "role": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "roleHuman": {
+                                                                "type": "string",
+                                                                "example": "Student"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "address": {
+                                                        "properties": {
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": "moscow"
+                                                            },
+                                                            "street": {
+                                                                "type": "string",
+                                                                "example": "lenina"
+                                                            },
+                                                            "house": {
+                                                                "type": "integer",
+                                                                "example": 10
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Delete",
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "description": "Student's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "Update",
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "description": "Student's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "title example"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "description example"
+                                            },
+                                            "first_name": {
+                                                "type": "string",
+                                                "example": "firstname example"
+                                            },
+                                            "last_name": {
+                                                "type": "string",
+                                                "example": "lastname example"
+                                            },
+                                            "birthday": {
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2023-07-18"
+                                            },
+                                            "group_id": {
+                                                "type": "integer",
+                                                "example": 5
+                                            },
+                                            "role": {
+                                                "type": "integer",
+                                                "example": 2
+                                            },
+                                            "address": {
+                                                "properties": {
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "moscow"
+                                                    },
+                                                    "street": {
+                                                        "type": "string",
+                                                        "example": "lenina"
+                                                    },
+                                                    "house": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "title example"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "description example"
+                                                },
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "firstname example"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "lastname example"
+                                                },
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2023-07-18"
+                                                },
+                                                "group": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "title": {
+                                                            "type": "string",
+                                                            "example": "group title"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "role": {
+                                                    "properties": {
+                                                        "role": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "roleHuman": {
+                                                            "type": "string",
+                                                            "example": "Student"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "address": {
+                                                    "properties": {
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": "moscow"
+                                                        },
+                                                        "street": {
+                                                            "type": "string",
+                                                            "example": "lenina"
+                                                        },
+                                                        "house": {
+                                                            "type": "integer",
+                                                            "example": 10
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/students/{student}/generate_pdf": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "User info export via pdf",
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "description": "Student's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "PDF successfully generated"
+                                        },
+                                        "download_link": {
+                                            "type": "string",
+                                            "example": "http://localhost:8000/storage/reports/user_1_report.pdf"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/oauth/login": {
             "post": {
                 "tags": [

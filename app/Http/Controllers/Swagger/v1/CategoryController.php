@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
  *                 @OA\Schema(
  *                     @OA\Property(property="name", type="string", example="title example"),
  *                     @OA\Property(property="email", type="string", example="description example"),
- *                     @OA\Property(property="tag_ids", type="array", example="1, 2, 3")
+ *                     @OA\Property(property="tag_ids", type="array", @OA\Items(ref=""), example="1, 2, 3")
  *                 )
  *             }
  *         )
