@@ -28,13 +28,10 @@ class OAuthController extends Controller
     {
         $data = $request->validated();
 
-        $tokens = $this->authService->generateTokens(
-            $this->authService->getCredentialsFromArray($data),
-            MethodEnums::POST->value, GrantTypeEnums::PASSWORD->value);
-
+        $tokens = $this->getTokens($data);
         $response = $this->authService->handle($tokens);
 
-        return response()->json(['data' => [$response]], 200);
+        return response()->json($response);
     }
 
     /**
@@ -44,27 +41,28 @@ class OAuthController extends Controller
     {
         $data = $request->validated();
 
-        DB::beginTransaction();
-
         try {
+            DB::beginTransaction();
+
             User::create($data);
+            $tokens = $this->getTokens($data);
 
-            $tokens = $this->authService->generateTokens(
-                $this->authService->getCredentialsFromArray($data),
-                MethodEnums::POST->value, GrantTypeEnums::PASSWORD->value);
+            if ($this->authService->isTokenRequestSuccessful($tokens)) {
+                DB::commit();
 
-            $response = $this->authService->handle($tokens);
+                $response = $this->authService->handle($tokens);
 
-            DB::commit();
-        } catch (Exception $e) {
+                return response()->json($response, 201);
+            } else {
+                DB::rollBack();
+
+                return response()->json(['error' => 'Failed to generate tokens'], 500);
+            }
+        } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['data' => [
-                'message' => $e->getMessage()
-            ]], 500);
+            return response()->json(['error' => 'Failed to register user: ' . $e->getMessage()], 500);
         }
-
-        return response()->json(['data' => [$response]], 200);
     }
 
     /**
@@ -78,13 +76,24 @@ class OAuthController extends Controller
 
         $response = $this->authService->handle($tokens);
 
-        return response()->json(['data' => [$response]], 200);
+        return response()->json($response);
     }
 
     public function logout(Request $request): JsonResponse
     {
         $request->user()->token()->revoke();
 
-        return response()->json(['data' => ['message' => 'Successfully logged out']]);
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    private function getTokens(array $data)
+    {
+        $credentials = $this->authService->getCredentialsFromArray($data);
+
+        return $this->authService->generateTokens(
+            $credentials,
+            MethodEnums::POST->value,
+            GrantTypeEnums::PASSWORD->value
+        );
     }
 }

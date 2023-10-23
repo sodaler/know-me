@@ -47,4 +47,11 @@ class AuthService
             'client_secret' => config('passport.password_grant_client.secret'),
         ];
     }
+
+    public function isTokenRequestSuccessful(Request $request): bool
+    {
+        $result = app()->handle($request);
+
+        return $result->isSuccessful();
+    }
 }
