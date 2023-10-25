@@ -13,6 +13,8 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use PDOException;
 use Symfony\Component\HttpFoundation\Response;
 
 class OAuthController extends Controller
@@ -46,7 +48,7 @@ class OAuthController extends Controller
 
         DB::beginTransaction();
 
-        try {
+        try {  
             User::create($data);
 
             $tokens = $this->authService->generateTokens(
@@ -56,6 +58,17 @@ class OAuthController extends Controller
             $response = $this->authService->handle($tokens);
 
             DB::commit();
+        } catch (PDOException $e) {
+            DB::rollBack();
+
+            Log::error($e);
+
+            $error = match (intval($e->getCode())) {
+                23000 => __('errors.user_exists'),
+                default => __('errors.database_error'),
+            };
+
+            return response()->json(['error' => $error], 500);
         } catch (Exception $e) {
             DB::rollBack();
 
