@@ -24,33 +24,42 @@
                                             "items": {
                                                 "properties": {
                                                     "id": {
-                                                        "type": "integer"
+                                                        "type": "integer",
+                                                        "example": 1
                                                     },
                                                     "title": {
-                                                        "type": "string"
+                                                        "type": "string",
+                                                        "example": "qwe"
                                                     },
                                                     "description": {
-                                                        "type": "string"
+                                                        "type": "string",
+                                                        "example": "qwer"
                                                     },
                                                     "image": {
-                                                        "type": "string"
+                                                        "type": "string",
+                                                        "example": "qwer"
                                                     },
                                                     "alt": {
-                                                        "type": "string"
+                                                        "type": "string",
+                                                        "example": "qwe"
                                                     },
                                                     "slug": {
-                                                        "type": "string"
+                                                        "type": "string",
+                                                        "example": "qwe"
                                                     },
                                                     "user": {
                                                         "properties": {
                                                             "id": {
-                                                                "type": "integer"
+                                                                "type": "integer",
+                                                                "example": 4
                                                             },
                                                             "name": {
-                                                                "type": "string"
+                                                                "type": "string",
+                                                                "example": "admin"
                                                             },
                                                             "phone": {
-                                                                "type": "string"
+                                                                "type": "string",
+                                                                "example": null
                                                             }
                                                         },
                                                         "type": "object"
@@ -60,10 +69,12 @@
                                                         "items": {
                                                             "properties": {
                                                                 "id": {
-                                                                    "type": "integer"
+                                                                    "type": "integer",
+                                                                    "example": 1
                                                                 },
                                                                 "title": {
-                                                                    "type": "string"
+                                                                    "type": "string",
+                                                                    "example": "skill"
                                                                 }
                                                             },
                                                             "type": "object"
@@ -74,12 +85,78 @@
                                             }
                                         },
                                         "links": {
-                                            "type": "array",
-                                            "items": {}
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8878/api/v1/card?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8878/api/v1/card?page=1"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
                                         },
                                         "meta": {
-                                            "type": "array",
-                                            "items": {}
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8878/api/v1/card"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -122,33 +199,42 @@
                                         "data": {
                                             "properties": {
                                                 "id": {
-                                                    "type": "integer"
+                                                    "type": "integer",
+                                                    "example": 1
                                                 },
                                                 "title": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "qwe"
                                                 },
                                                 "description": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "qwer"
                                                 },
                                                 "image": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "qwer"
                                                 },
                                                 "alt": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "qwe"
                                                 },
                                                 "slug": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "example": "qwe"
                                                 },
                                                 "user": {
                                                     "properties": {
                                                         "id": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "example": 4
                                                         },
                                                         "name": {
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "example": "admin"
                                                         },
                                                         "phone": {
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "example": null
                                                         }
                                                     },
                                                     "type": "object"
@@ -158,10 +244,12 @@
                                                     "items": {
                                                         "properties": {
                                                             "id": {
-                                                                "type": "integer"
+                                                                "type": "integer",
+                                                                "example": 1
                                                             },
                                                             "title": {
-                                                                "type": "string"
+                                                                "type": "string",
+                                                                "example": "skill"
                                                             }
                                                         },
                                                         "type": "object"
@@ -988,6 +1076,174 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/v1/skill": {
+            "get": {
+                "tags": [
+                    "Skill"
+                ],
+                "summary": "Index",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Skill"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8878/api/v1/skill?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8878/api/v1/skill?page=1"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8878/api/v1/skill"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/skill/{id}": {
+            "get": {
+                "tags": [
+                    "Skill"
+                ],
+                "summary": "Show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Skill ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Skill"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
