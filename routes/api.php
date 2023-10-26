@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
 
     Route::get('card', [CardController::class, 'index'])->name('card.index');
     Route::get('card/{card}', [CardController::class, 'show'])->name('card.show');
+    Route::post('card/{card}/image', [CardController::class,'addImage'])->name('card.image.add');
     Route::get('skill', [SkillController::class, 'index'])->name('skill.index');
     Route::get('skill/{skill}', [SkillController::class, 'show'])->name('skill.show');
 });
