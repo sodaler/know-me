@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\CardController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\OAuthController;
 use App\Http\Controllers\Api\v1\SkillController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,11 +29,14 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
-    Route::apiResource('category', CategoryController::class);
+    Route::apiResources([
+        'category' => CategoryController::class,
+        'user' => UserController::class
+    ]);
 
     Route::get('card', [CardController::class, 'index'])->name('card.index');
     Route::get('card/{card}', [CardController::class, 'show'])->name('card.show');
-    Route::post('card/{card}/image', [CardController::class,'addImage'])->name('card.image.add');
+    Route::post('card/{card}/image', [CardController::class, 'addImage'])->name('card.image.add');
     Route::get('skill', [SkillController::class, 'index'])->name('skill.index');
     Route::get('skill/{skill}', [SkillController::class, 'show'])->name('skill.show');
 });
