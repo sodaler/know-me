@@ -7,13 +7,18 @@ use App\Enums\Http\MethodEnums;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ResetPasswordLinkRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\User;
 use App\Services\Auth\AuthService;
 use Exception;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 use PDOException;
 use Symfony\Component\HttpFoundation\Response;
 

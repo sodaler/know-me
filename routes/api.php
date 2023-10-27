@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\CardController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\OAuthController;
+use App\Http\Controllers\Api\v1\PasswordController;
 use App\Http\Controllers\Api\v1\SkillController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ Route::group(['prefix' => 'v1/oauth'], function () {
     Route::post('login', [OAuthController::class, 'login'])->name('login');
     Route::post('refresh', [OAuthController::class, 'refresh'])->name('refresh');
     Route::post('register', [OAuthController::class, 'register'])->name('register');
+    Route::post('password-link', [PasswordController::class, 'link'])->name('password.link');
+    Route::get('password', [PasswordController::class, 'reset'])->name('password.reset');
+    Route::post('password', [PasswordController::class, 'store'])->name('password.store');
 });
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
