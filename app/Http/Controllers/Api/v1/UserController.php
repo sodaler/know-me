@@ -17,11 +17,6 @@ class UserController extends Controller
     ) {
     }
 
-    public function index()
-    {
-        //
-    }
-
     public function show(User $user): UserResource
     {
         return new UserResource($user);

@@ -33,6 +33,6 @@ class CardController extends Controller
     {
         $this->cardService->addImage($request->file('image'), $card);
 
-        return response()->json(200);
+        return response()->json();
     }
 }
