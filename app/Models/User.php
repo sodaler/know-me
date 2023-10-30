@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -64,13 +65,28 @@ class User extends Authenticatable
         return $this->hasMany(Card::class);
     }
 
-    public function messagesSent(): HasManyMongo
+    public function memberMessages(): HasManyMongo
     {
-        return $this->hasMany(Message::class, 'to_id', 'id');
+        return $this->hasMany(Message::class, 'member_id', 'id');
     }
 
-    public function messagesReceived(): HasManyMongo
+    public function creatorMessages(): HasManyMongo
     {
-        return $this->hasMany(Message::class, 'from_id', 'id');
+        return $this->hasMany(Message::class, 'creator_id', 'id');
+    }
+
+    public function memberChats(): HasManyMongo
+    {
+        return $this->hasMany(Chat::class, 'member_id', 'id');
+    }
+
+    public function creatorChats(): HasManyMongo
+    {
+        return $this->hasMany(Chat::class, 'creator_id', 'id');
+    }
+
+    public function scopeAllChats(): Collection
+    {
+        return $this->memberChats->concat($this->creatorChats)->unique();
     }
 }

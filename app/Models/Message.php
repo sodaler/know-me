@@ -12,18 +12,11 @@ class Message extends Model
     protected $connection = 'mongodb';
 
     protected $fillable = [
-        'to_id',
-        'from_id',
-        'content'
+        'content',
     ];
 
-    public function receiver(): BelongsTo
+    public function chat(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'to_id', 'id');
-    }
-
-    public function sender(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'from_id', 'id');
+        return $this->belongsTo(Chat::class);
     }
 }

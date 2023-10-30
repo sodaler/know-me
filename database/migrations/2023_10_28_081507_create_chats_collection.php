@@ -1,11 +1,12 @@
 <?php
 
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 use MongoDB\Laravel\Schema\Blueprint;
 
-return new class extends Migration {
-
+return new class extends Migration
+{
     protected $connection = 'mongodb';
 
     /**
@@ -13,10 +14,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::connection($this->connection)->create('messages', function (Blueprint $collection) {
-            $collection->index('to_id');
-            $collection->index('from_id');
-            $collection->unique(['to_id', 'from_id']);
+        Schema::create('chats', function (Blueprint $collection) {
+            $collection->index('member_id');
+            $collection->index('creator_id');
+            $collection->unique(['member_id', 'creator_id']);
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('chats');
     }
 };
