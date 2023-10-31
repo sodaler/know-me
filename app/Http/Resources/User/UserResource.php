@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'image' => asset('storage/'.$this->image),
             'email' => $this->email,
+            'alt' => $this->alt,
         ];
     }
 }

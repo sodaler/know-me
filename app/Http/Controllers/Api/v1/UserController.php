@@ -24,15 +24,13 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request, User $user): JsonResponse
     {
-        $this->userService->update($request->validated(), $user);
-
-        return response()->json();
+        return response()->json([
+            'message' => $this->userService->update($request->validated(), $user),
+        ]);
     }
 
     public function destroy(User $user): JsonResponse
     {
-        $user->delete();
-
-        return response()->json();
+        return response()->json([$user->delete()]);
     }
 }

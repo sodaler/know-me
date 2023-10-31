@@ -10,11 +10,13 @@ class UserObserver
 {
     public function updated(User $user): void
     {
-        //
+        if ($user->isDirty('image')) {
+            Storage::disk('public')->delete($user->getOriginal('image'));
+        }
     }
 
     public function deleted(User $user): void
     {
-        Storage::disk('public')->deleteDirectory("user/{$user->id}");
+        Storage::disk('public')->deleteDirectory("avatars/{$user->id}");
     }
 }
