@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
 {
-    public function chats(): AnonymousResourceCollection
+    public function indexChats(): AnonymousResourceCollection
     {
         $user = auth()->user();
 

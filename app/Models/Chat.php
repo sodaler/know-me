@@ -34,6 +34,6 @@ class Chat extends Model
 
     public function creator(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_id', 'id');
+        return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 }

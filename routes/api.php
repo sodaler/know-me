@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ChatController;
 use App\Http\Controllers\Api\v1\OAuthController;
 use App\Http\Controllers\Api\v1\SkillController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +40,9 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::get('chats', [ChatController::class, 'index'])->name('chat.index');
     Route::get('chats/{chat}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('chats', [ChatController::class, 'store'])->name('chat.store');
-    Route::post('chats/send-message', [ChatController::class, 'sendMessage'])->name('chat.messages.send');
+    Route::post('chats/send-message', [ChatController::class, 'sendMessage'])->name('chat.message.send');
     Route::delete('chats/{chat}', [ChatController::class, 'deleteMessage'])->name('chat.delete');
-    Route::get('chats/messages', [ChatController::class, 'chatMessages'])->name('chat.messages.index');
+    Route::get('chats/messages', [ChatController::class, 'chatMessages'])->name('chat.message.index');
+
+    Route::get('users/{user}/chats', [UserController::class, 'indexChats'])->name('user.chat.index');
 });
