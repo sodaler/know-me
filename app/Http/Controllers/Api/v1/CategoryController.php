@@ -21,11 +21,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): array
     {
         $categories = Category::paginate(10);
 
-        return CategoryResource::collection($categories);
+        return CategoryResource::collection($categories)->resolve();
     }
 
     /**
