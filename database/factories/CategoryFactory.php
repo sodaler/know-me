@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends Factory
  */
 class CategoryFactory extends Factory
 {
@@ -17,7 +17,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->text(40),
+            'title' => $this->faker->title,
             'description' => $this->faker->text,
             'image' => $this->faker->imageUrl,
             'image_alt' => $this->faker->slug,
