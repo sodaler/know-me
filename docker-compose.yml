@@ -39,6 +39,18 @@ services:
         networks:
             - laravel
 
+    mysql-test:
+        image: mysql:8.0
+        ports:
+            - "8111:3306"
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql-test
+        networks:
+            - laravel
+
     php:
         build:
             context: ./dockerfiles
@@ -73,18 +85,6 @@ services:
         depends_on:
             - php
         entrypoint: [ 'composer', '--ignore-platform-reqs' ]
-        networks:
-            - laravel
-
-    npm:
-        image: node:current-alpine
-        volumes:
-            - ./:/var/www/html
-        ports:
-            - "3001:3001"
-            - "5173:5173"
-        working_dir: /var/www/html
-        entrypoint: [ 'npm' ]
         networks:
             - laravel
 
