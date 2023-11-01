@@ -12,7 +12,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->check();
+        return true;
     }
 
     /**
@@ -25,8 +25,9 @@ class StoreRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'skill_ids' => ['nullable', 'array'],
-            'skill_ids.*' => ['nullable', 'integer', 'exists:skills,id'],
+            'image' => ['nullable', 'file'],
+            'card_ids' => ['nullable', 'array'],
+            'card_ids.*' => ['nullable', 'integer', 'exists:cards,id'],
         ];
     }
 }

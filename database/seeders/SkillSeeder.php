@@ -16,11 +16,6 @@ class SkillSeeder extends Seeder
      */
     public function run(): void
     {
-//        Category::factory()
-//            ->hasAttached(Skill::query()->inRandomOrder()->get())
-//            ->count(10)
-//            ->create();
-
         SkillFactory::new()->count(20)->create();
     }
 }

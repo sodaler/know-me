@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Card;
+use App\Models\Category;
+use App\Models\Skill;
 use Illuminate\Database\Seeder;
 
 class CardSeeder extends Seeder
@@ -12,14 +14,16 @@ class CardSeeder extends Seeder
      */
     public function run(): void
     {
+        $categories = Category::all();
+        $skills = Skill::all();
+
         Card::factory()
             ->count(10)
             ->create()
-            ->each(function (Card $card) {
-                $user = $card->user;
+            ->each(function ($card) use ($categories, $skills) {
+                $card->categories()->attach($categories->random(rand(1, 3))->pluck('id')->toArray());
 
-                $card->categories()->attach($user->categories->pluck('id'));
-                $card->skills()->attach($user->skills->pluck('id'));
+                $card->skills()->attach($skills->random(rand(1, 5))->pluck('id')->toArray());
             });
     }
 }
