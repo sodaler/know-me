@@ -7,9 +7,16 @@ WORKDIR /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN apt-get update
-RUN apt-get install -y openssl zip unzip git curl
+RUN apt-get install -y openssl zip unzip curl
 RUN apt-get install -y libzip-dev libonig-dev libicu-dev
 RUN apt-get install -y autoconf pkg-config libssl-dev
+
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
+RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+    && docker-php-ext-install gd
 
 RUN docker-php-ext-install bcmath mbstring intl opcache
 
