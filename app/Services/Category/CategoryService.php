@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Storage;
 class CategoryService
 {
     public function __construct(private readonly FileService $fileService)
-    {}
+    {
+    }
 
     public function store(array $data): Category
     {
@@ -30,14 +31,17 @@ class CategoryService
 
     public function update(Category $category, array $data): Category
     {
-        $cards = $this->getCardIds($data);
-
         if ($data['image']) {
             $data['image'] = $this->fileService->saveImage('/category', $data['image']);
         }
 
+        if (!empty($data['card_ids'])) {
+            $cards = $this->getCardIds($data);
+
+            $category->cards()->sync($cards);
+        }
+
         $category->updateOrFail($data);
-        $category->cards()->sync($cards);
 
         return $category->fresh();
     }
