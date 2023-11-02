@@ -2,18 +2,16 @@
 
 namespace App\MoonShine\Resources;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Card;
-
+use Illuminate\Database\Eloquent\Model;
+use MoonShine\Actions\FiltersAction;
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\BelongsTo;
 use MoonShine\Fields\BelongsToMany;
-use MoonShine\Fields\Image;
+use MoonShine\Fields\ID;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Text;
 use MoonShine\Resources\Resource;
-use MoonShine\Fields\ID;
-use MoonShine\Actions\FiltersAction;
 
 class CardResource extends Resource
 {
@@ -40,7 +38,7 @@ class CardResource extends Resource
                     ->inLine(separator: ' ', badge: true)->select(),
                 BelongsTo::make('User', 'user', 'name'),
                 Number::make('rating', 'rating'),
-            ])
+            ]),
         ];
     }
 

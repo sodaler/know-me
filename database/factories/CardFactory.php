@@ -23,7 +23,7 @@ class CardFactory extends Factory
             'image' => $this->faker->imageUrl,
             'alt' => $this->faker->slug,
             'rating' => $this->faker->numberBetween(1, 5),
-            'user_id' => User::query()->inRandomOrder()->value('id')
+            'user_id' => User::query()->inRandomOrder()->value('id'),
         ];
     }
 }

@@ -17,7 +17,7 @@ class Chat extends Model
         'member_id',
         'creator_id',
         'member_name',
-        'creator_name'
+        'creator_name',
     ];
 
     use HasFactory;

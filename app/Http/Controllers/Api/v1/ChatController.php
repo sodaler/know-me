@@ -34,33 +34,36 @@ class ChatController extends Controller
     {
         $chat = CreateChat::fromArray($request->validated());
 
-        return response()->json(['data' => ['message' => "chat with {$chat->id} id created"]]);
+        return response()->json([
+            'message' => __('messages.success_create'),
+            'item' => [
+                'id' => $chat->id,
+            ],
+        ]);
     }
 
     public function sendMessage(SendMessageRequest $request, Chat $chat): JsonResponse
     {
-        $requestData = $request->validated();
+        broadcast(
+            new MessageSent(
+                $chat,
+                CreateChatsMessage::fromArray($chat, $request->validated())
+            )
+        );
 
-        $message = CreateChatsMessage::fromArray($chat, $requestData);
-
-        broadcast(new MessageSent($chat, $message));
-
-        return response()->json(['status' => 'Message sent']);
+        return response()->json(['status' => __('messages.message_sent')]);
     }
 
     public function deleteMessage(Chat $chat, Message $message): JsonResponse
     {
         $message->delete();
-
         broadcast(new MessageDeleted($chat, $message));
 
-        return response()->json(['status' => 'Message deleted']);
+        return response()->json(['status' => __('messages.message_deleted')]);
     }
 
     public function chatMessages(Chat $chat): AnonymousResourceCollection
     {
-        $messages = $chat->messages;
-
-        return MessageResource::collection($messages);
+        return MessageResource::collection($chat->messages);
     }
 }

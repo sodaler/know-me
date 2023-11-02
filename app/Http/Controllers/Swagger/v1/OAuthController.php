@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 /**
  * @OA\Post(
@@ -12,9 +11,12 @@ use Illuminate\Http\Request;
  *     tags={"Auth"},
  *
  *     @OA\RequestBody(
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="email", type="string", example="email@mail.com"),
  *                     @OA\Property(property="password", type="string", example="password"),
  *                 )
@@ -25,7 +27,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="object",
  *                 @OA\Property(property="token_type", type="string", example="Bearer"),
  *                 @OA\Property(property="expires_in", type="integer", example=3600),
@@ -42,9 +46,12 @@ use Illuminate\Http\Request;
  *     tags={"Auth"},
  *
  *     @OA\RequestBody(
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="name", type="string", example="name_ex"),
  *                     @OA\Property(property="email", type="string", example="email_ex"),
  *                     @OA\Property(property="password", type="string", example="password_ex"),
@@ -56,7 +63,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="object",
  *                 @OA\Property(property="token_type", type="string", example="Bearer"),
  *                 @OA\Property(property="expires_in", type="integer", example=3600),
@@ -76,7 +85,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="message", type="string", example="Successfully logged out"),
  *         ),
  *     ),
@@ -88,9 +99,12 @@ use Illuminate\Http\Request;
  *     tags={"Auth"},
  *
  *     @OA\RequestBody(
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="refresh_token", type="string", example="sdfgsssdfasdfqweqwcvx"),
  *                 )
  *             }
@@ -100,7 +114,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="object",
  *                 @OA\Property(property="token_type", type="string", example="Bearer"),
  *                 @OA\Property(property="expires_in", type="integer", example=3600),
@@ -111,6 +127,6 @@ use Illuminate\Http\Request;
  *     ),
  * )
  */
-
 class OAuthController extends Controller
-{}
+{
+}

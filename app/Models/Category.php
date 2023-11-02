@@ -17,7 +17,8 @@ class Category extends Model
         'description',
         'image',
         'image_alt',
-        'rating'
+        'slug',
+        'rating',
     ];
 
     public function cards(): BelongsToMany

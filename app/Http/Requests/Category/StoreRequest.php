@@ -4,6 +4,7 @@ namespace App\Http\Requests\Category;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -25,7 +26,11 @@ class StoreRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'image' => ['nullable', 'file'],
+            'image' => [
+                'required',
+                File::types(config('image.allowed_exts'))
+                    ->max(config('image.max_size')),
+            ],
             'card_ids' => ['nullable', 'array'],
             'card_ids.*' => ['nullable', 'integer', 'exists:cards,id'],
         ];

@@ -16,8 +16,7 @@ class CategoryController extends Controller
 {
     public function __construct(
         private readonly CategoryService $categoryService
-    )
-    {
+    ) {
     }
 
     /**
@@ -55,11 +54,9 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, Category $category): CategoryResource
     {
-        $data = $request->validated();
-
-        $category = $this->categoryService->update($category, $data);
-
-        return new CategoryResource($category);
+        return new CategoryResource(
+            $this->categoryService->update($category, $request->validated())
+        );
     }
 
     /**
@@ -70,7 +67,9 @@ class CategoryController extends Controller
         $category->cards()->detach();
         $category->delete();
 
-        return response()->json(['message' => 'category successfully deleted']);
+        return response()->json([
+            'message' => __('messages.success_delete'),
+        ]);
     }
 
     public function showCards(Category $category): CategoryWithCardsResource

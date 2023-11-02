@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 /**
  * @OA\Post(
@@ -13,9 +12,12 @@ use Illuminate\Http\Request;
  *     security={{ "bearerAuth": {} }},
  *
  *     @OA\RequestBody(
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="name", type="string", example="title example"),
  *                     @OA\Property(property="email", type="string", example="description example"),
  *                     @OA\Property(property="tag_ids", type="array", @OA\Items(ref=""), example="1, 2, 3")
@@ -27,9 +29,12 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=201,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="name", type="string", example="title example"),
  *                     @OA\Property(property="email", type="string", example="description example"),
  *                     @OA\Property(property="first_name", type="string", example="firstname example"),
@@ -63,7 +68,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="array", @OA\Items(
  *                 @OA\Property(property="name", type="string", example="title example"),
  *                 @OA\Property(property="email", type="string", example="description example"),
@@ -105,7 +112,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="array", @OA\Items(
  *                 @OA\Property(property="name", type="string", example="title example"),
  *                 @OA\Property(property="email", type="string", example="description example"),
@@ -145,9 +154,12 @@ use Illuminate\Http\Request;
  *     ),
  *
  *     @OA\RequestBody(
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="name", type="string", example="title example"),
  *                     @OA\Property(property="email", type="string", example="description example"),
  *                     @OA\Property(property="first_name", type="string", example="firstname example"),
@@ -168,9 +180,12 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=201,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
  *             allOf={
+ *
  *                 @OA\Schema(
+ *
  *                     @OA\Property(property="name", type="string", example="title example"),
  *                     @OA\Property(property="email", type="string", example="description example"),
  *                     @OA\Property(property="first_name", type="string", example="firstname example"),
@@ -212,7 +227,9 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="Ok",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="message", type="string", example="deleted"),
  *         ),
  *     ),
@@ -235,14 +252,15 @@ use Illuminate\Http\Request;
  *     @OA\Response(
  *         response=200,
  *         description="OK",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="message", type="string", example="PDF successfully generated"),
  *             @OA\Property(property="download_link", type="string", example="http://localhost:8000/storage/reports/user_1_report.pdf")
  *         )
  *     )
  * )
  */
-
 class CategoryController extends Controller
 {
     //

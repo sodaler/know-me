@@ -10,12 +10,17 @@ use App\Http\Controllers\Controller;
  *   path="/api/v1/skill",
  *   summary="Index",
  *   security={{"bearerAuth": {}}},
+ *
  *   @OA\Response(
  *       response=200,
  *       description="OK",
+ *
  *       @OA\JsonContent(
+ *
  *           @OA\Property(property="data", type="array",
+ *
  *               @OA\Items(
+ *
  *                   @OA\Property(property="id", type="integer", example=1),
  *                   @OA\Property(property="title", type="string", example="Skill"),
  *               )
@@ -31,7 +36,9 @@ use App\Http\Controllers\Controller;
  *               @OA\Property(property="from", type="integer", example=1),
  *               @OA\Property(property="last_page", type="integer", example=1),
  *               @OA\Property(property="links", type="array",
+ *
  *                   @OA\Items(
+ *
  *                       @OA\Property(property="url", type="string", nullable=true),
  *                       @OA\Property(property="label", type="string", example="1"),
  *                       @OA\Property(property="active", type="boolean", example=true),
@@ -44,21 +51,24 @@ use App\Http\Controllers\Controller;
  *           ),
  *       )
  *   ),
+ *
  *   @OA\Response(response=401, description="Unauthorized"),
  * )
- * 
+ *
  * @OA\Get(
  *     path="/api/v1/skill/{id}",
  *     summary="Show",
  *     tags={"Skill"},
  *     security={{"bearerAuth": {}}},
- *     
+ *
  *     @OA\Parameter(name="id", in="path", required=true, description="Skill ID"),
- *     
+ *
  *     @OA\Response(
  *         response=200,
  *         description="OK",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="object",
  *                 @OA\Property(property="id", type="integer", example=1),
  *                 @OA\Property(property="title", type="string", example="Skill"),
@@ -67,7 +77,6 @@ use App\Http\Controllers\Controller;
  *     )
  * )
  */
-
 class SkillController extends Controller
 {
     //

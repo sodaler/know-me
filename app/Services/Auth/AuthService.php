@@ -2,6 +2,8 @@
 
 namespace App\Services\Auth;
 
+use App\Enums\Auth\GrantTypeEnums;
+use App\Enums\Http\MethodEnums;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -53,5 +55,16 @@ class AuthService
         $result = app()->handle($request);
 
         return $result->isSuccessful();
+    }
+
+    public function getTokensByCredentials(array $data): array
+    {
+        return $this->handle(
+            $this->generateTokens(
+                $this->getCredentialsFromArray($data),
+                MethodEnums::POST->value,
+                GrantTypeEnums::PASSWORD->value
+            )
+        );
     }
 }

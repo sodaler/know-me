@@ -18,7 +18,7 @@ class MessageResource extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'is_current_user_creator' => $this->isCurrentCreator(),
-            'dispatch_time' => $this->created_at->diffForHumans()
+            'dispatch_time' => $this->created_at->diffForHumans(),
         ];
     }
 

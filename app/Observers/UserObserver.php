@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class UserObserver

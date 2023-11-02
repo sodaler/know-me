@@ -3,20 +3,15 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Card\AddImageRequest;
 use App\Http\Resources\Card\CardResource;
 use App\Models\Card;
-use App\Services\Card\CardService;
+use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CardController extends Controller
 {
-    public function __construct(
-        private readonly CardService $cardService
-    ) {
-    }
-
     public function index(): AnonymousResourceCollection
     {
         $cards = Card::with(['skills', 'user'])->paginate(10);
@@ -29,10 +24,15 @@ class CardController extends Controller
         return new CardResource($card->load('skills'));
     }
 
-    public function addImage(Request $request, Card $card): JsonResponse
+    public function addImage(AddImageRequest $request, Card $card, FileService $fileService): JsonResponse
     {
-        $this->cardService->addImage($request->file('image'), $card);
+        $card->update([
+            'image' => $fileService
+                ->saveImage("card/{$card->id}", $request->file('image')),
+        ]);
 
-        return response()->json();
+        return response()->json([
+            'message' => __('messages.success_update'),
+        ]);
     }
 }

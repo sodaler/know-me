@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Category;
 
-use App\Http\Resources\Card\CardResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +22,7 @@ class CategoryResource extends JsonResource
             'description' => $this->description,
             'slug' => $this->slug,
             'image' => $this->image,
-            'alt' => $this->image_alt
+            'alt' => $this->image_alt,
         ];
     }
 }

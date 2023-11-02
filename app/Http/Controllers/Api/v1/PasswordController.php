@@ -16,32 +16,32 @@ class PasswordController extends Controller
     public function link(ResetPasswordLinkRequest $request): JsonResponse
     {
         return response()->json([
-            'message' => __(Password::sendResetLink($request->only('email'))),
+            'message' => __(Password::sendResetLink($request->validated())),
         ]);
     }
 
     public function reset(Request $request): JsonResponse
     {
-        return response()->json([
-            'data' => $request->all()
-        ]);
+        return response()->json(
+            $request->only(['token', 'email'])
+        );
     }
 
     public function store(ResetPasswordRequest $request): JsonResponse
     {
-        $data = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                ])->save();
-
-                event(new PasswordReset($user));
-            }
-        );
-
         return response()->json([
-            'data' => __($data)
+            'message' => __(
+                Password::reset(
+                    $request->validated(),
+                    function ($user) use ($request) {
+                        $user->forceFill([
+                            'password' => Hash::make($request->password),
+                        ])->save();
+
+                        event(new PasswordReset($user));
+                    }
+                )
+            ),
         ]);
     }
 }

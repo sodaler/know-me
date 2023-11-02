@@ -19,7 +19,7 @@ class Card extends Model
         'image',
         'rating',
         'alt',
-        'slug'
+        'slug',
     ];
 
     public function user(): BelongsTo

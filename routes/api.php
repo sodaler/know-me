@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::apiResources([
         'categories' => CategoryController::class,
-        'user' => UserController::class
+        'users' => UserController::class
     ]);
 
     Route::get('cards', [CardController::class, 'index'])->name('card.index');

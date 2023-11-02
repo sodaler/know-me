@@ -10,12 +10,17 @@ use App\Http\Controllers\Controller;
  *   path="/api/v1/card",
  *   summary="Index",
  *   security={{"bearerAuth": {}}},
+ *
  *   @OA\Response(
  *       response=200,
  *       description="OK",
+ *
  *       @OA\JsonContent(
+ *
  *           @OA\Property(property="data", type="array",
+ *
  *               @OA\Items(
+ *
  *                   @OA\Property(property="id", type="integer", example=1),
  *                   @OA\Property(property="title", type="string", example="qwe"),
  *                   @OA\Property(property="description", type="string", example="qwer"),
@@ -28,7 +33,9 @@ use App\Http\Controllers\Controller;
  *                       @OA\Property(property="phone", type="string", example=null),
  *                   ),
  *                   @OA\Property(property="skills", type="array",
+ *
  *                       @OA\Items(
+ *
  *                           @OA\Property(property="id", type="integer", example=1),
  *                           @OA\Property(property="title", type="string", example="skill"),
  *                       )
@@ -46,17 +53,23 @@ use App\Http\Controllers\Controller;
  *               @OA\Property(property="from", type="integer", example=1),
  *               @OA\Property(property="last_page", type="integer", example=1),
  *               @OA\Property(property="links", type="array",
+ *
  *                   @OA\Items(
+ *
  *                       @OA\Property(property="url", type="string", nullable=true),
  *                       @OA\Property(property="label", type="string", example="&laquo; Previous"),
  *                       @OA\Property(property="active", type="boolean", example=false),
  *                   ),
+ *
  *                   @OA\Items(
+ *
  *                       @OA\Property(property="url", type="string", example="http://localhost:8878/api/v1/card?page=1"),
  *                       @OA\Property(property="label", type="string", example="1"),
  *                       @OA\Property(property="active", type="boolean", example=true),
  *                   ),
+ *
  *                   @OA\Items(
+ *
  *                       @OA\Property(property="url", type="string", nullable=true),
  *                       @OA\Property(property="label", type="string", example="Next &raquo;"),
  *                       @OA\Property(property="active", type="boolean", example=false),
@@ -69,21 +82,24 @@ use App\Http\Controllers\Controller;
  *           ),
  *       )
  *   ),
+ *
  *   @OA\Response(response=401, description="Unauthorized"),
  * )
- * 
+ *
  * @OA\Get(
  *     path="/api/v1/card/{id}",
  *     summary="Show",
  *     tags={"Card"},
  *     security={{"bearerAuth": {}}},
- *     
+ *
  *     @OA\Parameter(name="id", in="path", required=true, description="Card ID"),
- *     
+ *
  *     @OA\Response(
  *         response=200,
  *         description="OK",
+ *
  *         @OA\JsonContent(
+ *
  *             @OA\Property(property="data", type="object",
  *                 @OA\Property(property="id", type="integer", example=1),
  *                 @OA\Property(property="title", type="string", example="qwe"),
@@ -97,7 +113,9 @@ use App\Http\Controllers\Controller;
  *                     @OA\Property(property="phone", type="string", example=null),
  *                 ),
  *                 @OA\Property(property="skills", type="array",
+ *
  *                     @OA\Items(
+ *
  *                         @OA\Property(property="id", type="integer", example=1),
  *                         @OA\Property(property="title", type="string", example="skill"),
  *                     )

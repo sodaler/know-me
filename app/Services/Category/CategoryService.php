@@ -4,8 +4,8 @@ namespace App\Services\Category;
 
 use App\Models\Category;
 use App\Services\FileService;
-use Illuminate\Support\Facades\Storage;
 
+// TODO: store, update
 class CategoryService
 {
     public function __construct(private readonly FileService $fileService)
@@ -14,11 +14,14 @@ class CategoryService
 
     public function store(array $data): Category
     {
-        $data['image'] = !empty($data['image'])
-            ? $this->fileService->saveImage('/category', $data['image'])
-            : 'default';
+        if (!empty($data['image'])) {
+            $image = $data['image'];
+            unset($data['image']);
+        }
 
         $category = Category::create($data);
+
+        $this->fileService->saveImage("category/{$category->id}", $image);
 
         if (!empty($data['card_ids'])) {
             $cards = $this->getCardIds($data);
