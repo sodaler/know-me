@@ -4,9 +4,6 @@ namespace App\Services\User;
 
 use App\Models\User;
 use App\Services\FileService;
-use Exception;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
@@ -15,22 +12,17 @@ class UserService
     ) {
     }
 
-    public function update(array $data, User $user): string
+    public function update(array $data, User $user): User
     {
         if (isset($data['image'])) {
-            try {
-                $data['image'] = $this->fileService
-                    ->saveImage(
-                        "avatars/{$user->id}",
-                        $data['image']
-                    );
-            } catch (Exception $e) {
-                return $e->getMessage();
-            }
+            $data['image'] = $this->fileService
+                ->saveImage(
+                    "avatars/{$user->id}",
+                    $data['image']
+                );
         }
+        $user->updateOrFail($data);
 
-        return $user->updateOrFail($data)
-            ? __('messages.success_update')
-            : __('errors.fail_update');
+        return $user->fresh();
     }
 }

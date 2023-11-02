@@ -3,19 +3,30 @@
 namespace App\Services\Category;
 
 use App\Models\Category;
-use Illuminate\Support\Facades\Storage;
+use App\Services\FileService;
 
 class CategoryService
 {
+    public function __construct(
+        private readonly FileService $fileService
+    ) {
+    }
+
     public function store(array $data): Category
     {
         $skills = $this->getSkillIds($data);
+        $image = $data['image'];
+        $data = collect($data)->forget('image');
 
-        $data['image'] = Storage::disk('public')->put('/category', $data['image']);
         $category = Category::createOrFail($data);
         $category->skills()->attach($skills);
 
-        return $category;
+        $image = $this->fileService->saveImage("category/{$category->id}", $image);
+        $category->update([
+            'image' => $image,
+        ]);
+
+        return $category->fresh();
     }
 
     public function update(Category $category, array $data): Category

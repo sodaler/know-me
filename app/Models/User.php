@@ -15,7 +15,7 @@ use MongoDB\Laravel\Relations\HasMany as HasManyMongo;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HybridRelations;
+    use HasApiTokens, HasFactory, HybridRelations, Notifiable;
 
     protected $connection = 'mysql';
 

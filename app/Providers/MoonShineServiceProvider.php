@@ -6,9 +6,9 @@ use App\MoonShine\Resources\CardResource;
 use App\MoonShine\Resources\CategoryResource;
 use App\MoonShine\Resources\SkillResource;
 use Illuminate\Support\ServiceProvider;
-use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
+use MoonShine\MoonShine;
 use MoonShine\Resources\MoonShineUserResource;
 use MoonShine\Resources\MoonShineUserRoleResource;
 

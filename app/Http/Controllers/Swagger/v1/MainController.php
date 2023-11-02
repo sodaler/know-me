@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 /**
  * @OA\Info(
@@ -16,6 +15,7 @@ use Illuminate\Http\Request;
  * ),
  *
  * @OA\Components(
+ *
  *     @OA\SecurityScheme(
  *         securityScheme="bearerAuth",
  *         type="http",
@@ -23,6 +23,6 @@ use Illuminate\Http\Request;
  *     )
  * )
  */
-
 class MainController extends Controller
-{}
+{
+}

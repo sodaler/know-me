@@ -20,7 +20,7 @@ class CategoryControllerTest extends TestCase
         parent::setUp();
 
         $this->withHeaders([
-            'accept' => 'application/json'
+            'accept' => 'application/json',
         ]);
 
         $this->user = UserFactory::new()->create();

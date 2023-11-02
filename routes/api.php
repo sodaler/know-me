@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\CardController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\ChatController;
 use App\Http\Controllers\Api\v1\OAuthController;
 use App\Http\Controllers\Api\v1\PasswordController;
 use App\Http\Controllers\Api\v1\SkillController;
@@ -35,7 +36,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1/oauth'], function () {
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::apiResources([
         'category' => CategoryController::class,
-        'user' => UserController::class
+        'user' => UserController::class,
     ]);
 
     Route::get('cards', [CardController::class, 'index'])->name('card.index');

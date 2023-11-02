@@ -10,13 +10,13 @@ use App\Models\Category;
 use App\Services\Category\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryController extends Controller
 {
     public function __construct(
         private readonly CategoryService $categoryService
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -33,11 +33,14 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $data = $request->validated();
+        $category = $this->categoryService->store($request->validated());
 
-        $category = $this->categoryService->store($data);
-
-        return response()->json(['data' => ['message' => "category with {$category->id} id created"]]);
+        return response()->json([
+            'message' => __('messages.success_create'),
+            'item' => [
+                'id' => $category->id,
+            ],
+        ]);
     }
 
     /**
@@ -51,13 +54,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $category): CategoryResource
     {
-        $data = $request->validated();
-
-        $category = $this->categoryService->update($category, $data);
-
-        return new CategoryResource($category);
+        return new CategoryResource(
+            $this->categoryService->update($category, $request->validated())
+        );
     }
 
     /**
@@ -68,6 +69,8 @@ class CategoryController extends Controller
         $category->skills()->detach();
         $category->delete();
 
-        return response()->json(['data' => ['message' => 'category successfully deleted']]);
+        return response()->json([
+            'message' => __('messages.success_delete'),
+        ]);
     }
 }

@@ -19,7 +19,7 @@ class Category extends Model
         'image',
         'image_alt',
         'slug',
-        'rating'
+        'rating',
     ];
 
     public function skills(): BelongsToMany

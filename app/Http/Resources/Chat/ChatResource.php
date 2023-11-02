@@ -18,7 +18,7 @@ class ChatResource extends JsonResource
             'id' => $this->id,
             'last_message' => $this?->messages->last()->content,
             'last_message_time_sent' => $this?->messages->last()->created_at->diffForHumans(),
-            'title' => $this->getCurrentTitle()
+            'title' => $this->getCurrentTitle(),
         ];
     }
 
