@@ -16,7 +16,7 @@ class CategoryService
     {
         $skills = $this->getSkillIds($data);
         $image = $data['image'];
-        $data = collect($data)->forget('image');
+        unset($data['image']);
 
         $category = Category::createOrFail($data);
         $category->skills()->attach($skills);
