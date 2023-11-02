@@ -15,22 +15,10 @@ class Category extends Model
     protected $fillable = [
         'title',
         'description',
-        'skill_id',
         'image',
         'image_alt',
-        'slug',
         'rating'
     ];
-
-    public function skills(): BelongsToMany
-    {
-        return $this->belongsToMany(Skill::class);
-    }
-
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
 
     public function cards(): BelongsToMany
     {

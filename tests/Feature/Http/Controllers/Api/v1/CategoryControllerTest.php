@@ -7,6 +7,8 @@ use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CategoryControllerTest extends TestCase
@@ -64,6 +66,11 @@ class CategoryControllerTest extends TestCase
 
         $data = $this->validParams();
 
+        Storage::fake('media');
+
+        $file = UploadedFile::fake()->image('category.jpg');
+        $data['image'] = $file;
+
         $response = $this->actingAs($this->user)->post('/api/v1/categories', $data);
         $this->assertDatabaseCount('categories', 1);
 
@@ -71,11 +78,69 @@ class CategoryControllerTest extends TestCase
 
         $this->assertEquals($data['title'], $category->title);
         $this->assertEquals($data['description'], $category->description);
+        $this->assertEquals('category/' . $file->name, $category->image);
 
         $response->assertJson([
             'id' => $category->id,
             'title' => $category->title,
             'description' => $category->description,
+            'image' => $category->image
+        ]);
+
+        self::assertFileExists(storage_path('app/public/category/' . $file->name));
+    }
+
+    public function test_it_updated_successful()
+    {
+        $this->withoutExceptionHandling();
+
+        $category = Category::factory()->create();
+        $file = UploadedFile::fake()->image('category_example.jpg');
+
+        $data = $this->validParams();
+        $data['image'] = $file;
+        $data['title'] = 'title_changed';
+        $data['description'] = 'description_changed';
+
+        $response = $this->actingAs($this->user)->patch('/api/v1/categories/' . $category->id, $data);
+
+        $response->assertJson([
+            'id' => $category->id,
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'image' => 'category/' . $file->name,
+        ]);
+
+        self::assertFileExists(storage_path('app/public/category/' . $file->name));
+    }
+
+    public function test_attribute_image_is_file_for_storing()
+    {
+        $data = $this->validParams();
+        $data['image'] = 'ex_string.jpg';
+
+        $response = $this->actingAs($this->user)->post('/api/v1/categories', $data);
+
+        $response->assertStatus(422);
+        $response->assertInvalid('image');
+        $response->assertJsonValidationErrors([
+            'image' => 'The image field must be a file.'
+        ]);
+    }
+
+    public function test_it_can_be_deleted_successful()
+    {
+        $this->withoutExceptionHandling();
+
+        $category = Category::factory()->create();
+
+        $response = $this->actingAs($this->user)->delete('/api/v1/categories/' . $category->id);
+
+        $response->assertOk();
+        $this->assertDatabaseCount('categories', 0);
+
+        $response->assertJson([
+            'message' => 'category successfully deleted'
         ]);
     }
 
@@ -93,7 +158,7 @@ class CategoryControllerTest extends TestCase
         })->toArray();
     }
 
-    private function validParams($overrides = [])
+    private function validParams($overrides = []): array
     {
         return array_merge([
             'title' => 'hello world',

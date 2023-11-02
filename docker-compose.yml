@@ -124,6 +124,5 @@ services:
             - ./storage/docker/mongodb/db:/data/db
             - ./storage/docker/mongodb/dev.archive:/Databases/dev.archive
             - ./storage/docker/mongodb/production:/Databases/production
-        command: [ --auth ]
         networks:
             laravel:
