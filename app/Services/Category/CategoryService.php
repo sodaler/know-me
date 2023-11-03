@@ -4,49 +4,72 @@ namespace App\Services\Category;
 
 use App\Models\Category;
 use App\Services\FileService;
+use Illuminate\Http\UploadedFile;
 
-// TODO: store, update
 class CategoryService
 {
-    public function __construct(private readonly FileService $fileService)
-    {
-    }
+    public function __construct(
+        private readonly FileService $fileService
+    ) {}
 
     public function store(array $data): Category
     {
-        if (!empty($data['image'])) {
-            $image = $data['image'];
-            unset($data['image']);
-        }
+        $image = $this->extractImage($data);
 
         $category = Category::create($data);
 
-        $this->fileService->saveImage("category/{$category->id}", $image);
+        $this->attachCards($category, $data);
 
-        if (!empty($data['card_ids'])) {
-            $cards = $this->getCardIds($data);
-
-            $category->cards()->attach($cards);
-        }
+        $this->saveCategoryImage($category, $image);
 
         return $category;
     }
 
     public function update(Category $category, array $data): Category
     {
-        if ($data['image']) {
-            $data['image'] = $this->fileService->saveImage('/category', $data['image']);
-        }
+        $image = $this->extractImage($data);
 
+        $this->syncCards($category, $data);
+
+        $category->updateOrFail($data);
+
+        $this->saveCategoryImage($category, $image);
+
+        return $category->fresh();
+    }
+
+    private function extractImage(array $data): ?UploadedFile
+    {
+        $image = $data['image'] ?? null;
+
+        unset($data['image']);
+
+        return $image;
+    }
+
+    private function attachCards(Category $category, array $data): void
+    {
+        if (!empty($data['card_ids'])) {
+            $cards = $this->getCardIds($data);
+
+            $category->cards()->attach($cards);
+        }
+    }
+
+    private function syncCards(Category $category, array $data): void
+    {
         if (!empty($data['card_ids'])) {
             $cards = $this->getCardIds($data);
 
             $category->cards()->sync($cards);
         }
+    }
 
-        $category->updateOrFail($data);
-
-        return $category->fresh();
+    private function saveCategoryImage(Category $category, ?UploadedFile $image): void
+    {
+        if ($image) {
+            $this->fileService->saveImage("category/{$category->id}", $image);
+        }
     }
 
     private function getCardIds(array $data): array
