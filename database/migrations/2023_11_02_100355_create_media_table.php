@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('path');
             $table->string('disk')->default('local');
             $table->string('file_hash', 64)->unique();
-            $table->string('collection')->nullable();
+            $table->string('mediable_type');
+            $table->unsignedBigInteger('mediable_id');
+            $table->unsignedBigInteger('media_type_id');
             
             $table->unsignedBigInteger('size');
 

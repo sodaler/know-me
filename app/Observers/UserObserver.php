@@ -14,6 +14,8 @@ class UserObserver
         }
     }
 
+    //TODO DELETE THIS OBSERVATOR AND HIS DIRTY METHOD
+    //Need to EVENT for delete
     public function deleted(User $user): void
     {
         Storage::disk('public')->deleteDirectory("avatars/{$user->id}");

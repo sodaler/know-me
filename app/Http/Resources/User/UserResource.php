@@ -17,7 +17,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => asset('storage/'.$this->image),
+            'avatar' => asset('storage/'.$this->media()->avatar()->pluck('path')->first()),
             'email' => $this->email,
             'alt' => $this->alt,
         ];

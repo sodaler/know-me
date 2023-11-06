@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\User\UserResource;
+use App\Models\Media;
 use App\Models\User;
+use App\Services\FileService;
 use App\Services\User\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -18,11 +20,15 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(UpdateRequest $request, User $user, UserService $userService): UserResource
+    public function update(UpdateRequest $request, User $user, FileService $fileService): UserResource
     {
-        return new UserResource(
-            $userService->update($request->validated(), $user)
-        );
+        $data = $request->validated();
+        
+        isset($data['image']) 
+        ? $fileService->save($data['image'], $user) : null;
+        $user->updateOrFail($data);
+
+        return new UserResource($user);
     }
 
     public function destroy(User $user): JsonResponse

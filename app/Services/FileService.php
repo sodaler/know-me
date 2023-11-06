@@ -2,18 +2,20 @@
 
 namespace App\Services;
 
+use App\Contracts\UploadContract;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
-    public function saveImage(string $path, UploadedFile $image): string
+    public function __construct(
+        private readonly UploadContract $uploadAction
+    ) {
+    }
+
+    //TODO for other types.. (Bind via request('file') seems bad idea. I guess MATCH be better).
+    public function save(UploadedFile $file, Model $model)
     {
-        return Storage::disk('public')
-            ->putFileAs(
-                $path,
-                $image,
-                $image->getClientOriginalName()
-            );
+        $model->media()->create($this->uploadAction->exec($file, $model));
     }
 }
