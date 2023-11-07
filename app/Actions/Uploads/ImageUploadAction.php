@@ -19,14 +19,9 @@ class ImageUploadAction implements UploadContract
         );
 
         return [
-            'name' => $file->hashName(),
             'file_name' => $file->getClientOriginalName(),
             'mime_type' => $file->getClientMimeType(),
             'path' => $path,
-            'file_hash' => hash_file(
-                'md5',
-                storage_path("app/public/$path"),
-            ),
             'media_type_id' => 1, //TODO smooth. Enum ??
             'size' => $file->getSize(),
         ];

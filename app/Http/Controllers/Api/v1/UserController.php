@@ -23,9 +23,11 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user, FileService $fileService): UserResource
     {
         $data = $request->validated();
-        
-        isset($data['image']) 
-        ? $fileService->save($data['image'], $user) : null;
+
+        if (isset($data['image'])) {
+            $fileService->delete($user->media()->avatar()->first());
+            $fileService->save($data['image'], $user);
+        }
         $user->updateOrFail($data);
 
         return new UserResource($user);

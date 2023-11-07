@@ -15,18 +15,11 @@ class CategoryService
     public function store(array $data): Category
     {
         $skills = $this->getSkillIds($data);
-        $image = $data['image'];
-        $data = collect($data)->forget('image');
-
         $category = Category::createOrFail($data);
         $category->skills()->attach($skills);
+        $this->fileService->save($data['image'], $category);
 
-        $image = $this->fileService->saveImage("category/{$category->id}", $image);
-        $category->update([
-            'image' => $image,
-        ]);
-
-        return $category->fresh();
+        return $category;
     }
 
     public function update(Category $category, array $data): Category
