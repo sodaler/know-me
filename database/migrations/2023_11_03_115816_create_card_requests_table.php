@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Skill;
+use App\Enums\Card\CardRequestsStatuses;
+use App\Models\Card;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,27 +13,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skill_exchange_requests', function (Blueprint $table) {
-            $table->id('request_id');
+        Schema::create('card_requests', function (Blueprint $table) {
+            $table->id();
 
-            $table->foreignId('sender_id')
+            $table->foreignId('mentor_id')
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
 
-            $table->foreignId('receiver_id')
+            $table->foreignId('student_id')
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
 
-            $table->foreignIdFor(Skill::class)
+            $table->foreignIdFor(Card::class)
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
 
-            $table->unique(['sender_id', 'receiver_id']);
+            $table->enum('status', array_column(CardRequestsStatuses::cases(), 'value'))
+                ->default('created');
 
-            $table->date('requested_at');
+            $table->timestamps();
         });
     }
 
@@ -41,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skill_exchange_requests');
+        Schema::dropIfExists('card_requests');
     }
 };
