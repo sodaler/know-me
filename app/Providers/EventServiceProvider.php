@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\MediableNoteDeleted;
+use App\Listeners\DeleteRelatedMedia;
 use App\Listeners\ResetPasswordNotification;
 use App\Models\User;
 use App\Observers\UserObserver;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PasswordReset::class => [
             ResetPasswordNotification::class,
+        ],
+        MediableNoteDeleted::class => [
+            DeleteRelatedMedia::class,
         ],
     ];
 

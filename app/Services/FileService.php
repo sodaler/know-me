@@ -27,9 +27,20 @@ class FileService
         return $media;
     }
 
+    // Too many responsibility for service?
     public function delete(?Media $media): void
     {
         $media ? Storage::disk('public')->delete($media->path) : null;
         $media?->delete();
+    }
+
+    public function refresh(?UploadedFile $file, Model $model): void
+    {
+        if (!$file) {
+            return;
+        }
+        
+        $this->delete($model->media()->avatar()->first());
+        $this->save($file, $model);
     }
 }

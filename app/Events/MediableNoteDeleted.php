@@ -2,17 +2,16 @@
 
 namespace App\Events;
 
-use App\Models\Chat;
-use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageSent implements ShouldBroadcast
+class MediableNoteDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,25 +19,19 @@ class MessageSent implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Chat $chat,
-        public Message|Model $message
+        public Model $model
     ) {
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, Channel>
+     * @return array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel("chat.{$this->chat->id}"),
+            new PrivateChannel('channel-name'),
         ];
-    }
-
-    public function broadcastAs(): string
-    {
-        return 'message.sent';
     }
 }

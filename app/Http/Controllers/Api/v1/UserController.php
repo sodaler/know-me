@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Events\MediableNoteDeleted;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\Chat\ChatResource;
@@ -23,11 +24,7 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user, FileService $fileService): UserResource
     {
         $data = $request->validated();
-
-        if (isset($data['image'])) {
-            $fileService->delete($user->media()->avatar()->first());
-            $fileService->save($data['image'], $user);
-        }
+        $fileService->refresh($data['image'] ?? null, $user);
         $user->updateOrFail($data);
 
         return new UserResource($user);
@@ -35,6 +32,7 @@ class UserController extends Controller
 
     public function destroy(User $user): JsonResponse
     {
+        event(new MediableNoteDeleted($user));
         $user->delete();
 
         return response()->json([

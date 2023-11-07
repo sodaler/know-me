@@ -26,7 +26,7 @@ class CardController extends Controller
 
     public function addImage(AddImageRequest $request, Card $card, FileService $fileService): JsonResponse
     {
-        $fileService->save($request->validated()['image'], $card);
+        $fileService->refresh($request->validated()['image'], $card);
 
         return response()->json([
             'message' => __('messages.success_update'),
