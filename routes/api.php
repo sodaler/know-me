@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::get('cards', [CardController::class, 'index'])->name('card.index');
     Route::get('cards/{card}', [CardController::class, 'show'])->name('card.show');
     Route::post('cards/{card}/image', [CardController::class, 'addImage'])->name('card.image.add');
+    Route::delete('cards/{card}', [CardController::class, 'destroy'])->name('card.destroy');
     Route::get('skills', [SkillController::class, 'index'])->name('skill.index');
     Route::get('skills/{skill}', [SkillController::class, 'show'])->name('skill.show');
 

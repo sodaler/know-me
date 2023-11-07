@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Events\MediableNoteDeleted;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\AddImageRequest;
 use App\Http\Resources\Card\CardResource;
@@ -24,12 +25,20 @@ class CardController extends Controller
         return new CardResource($card->load('skills'));
     }
 
+    public function destroy(Card $card): JsonResponse
+    {
+        event(new MediableNoteDeleted($card));
+        $card->delete();
+
+        return response()->json([
+            'message' => __('messages.success_delete'),
+        ]);
+
+    }
+
     public function addImage(AddImageRequest $request, Card $card, FileService $fileService): JsonResponse
     {
-        $card->update([
-            'image' => $fileService
-                ->saveImage("card/{$card->id}", $request->file('image')),
-        ]);
+        $fileService->refresh($request->validated()['image'], $card);
 
         return response()->json([
             'message' => __('messages.success_update'),

@@ -37,7 +37,7 @@ class OAuthController extends Controller
      */
     public function register(RegisterRequest $request, CreateUserAction $createUserAction): JsonResponse
     {
-        return response()->json(
+        return response()->json( //TODO. No key, but is new user. Need to full secu for action
             ...$createUserAction->execute($request->validated())
         );
     }

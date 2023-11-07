@@ -68,7 +68,7 @@ class CategoryService
     private function saveCategoryImage(Category $category, ?UploadedFile $image): void
     {
         if ($image) {
-            $this->fileService->saveImage("category/{$category->id}", $image);
+            $this->fileService->save($image, $category);
         }
     }
 

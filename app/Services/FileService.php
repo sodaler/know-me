@@ -2,18 +2,43 @@
 
 namespace App\Services;
 
+use App\Contracts\UploadContract;
+use App\Models\Media;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
-    public function saveImage(string $path, UploadedFile $image): string
+    public function __construct(
+        private readonly UploadContract $uploadAction
+    ) {
+    }
+
+    public function save(UploadedFile $file, Model $model): Media
     {
-        return Storage::disk('public')
-            ->putFileAs(
-                $path,
-                $image,
-                $image->getClientOriginalName()
-            );
+        $new = $this->uploadAction->exec($file, $model);
+
+        $media = $model->media()->firstOrNew(['path' => $new['path']]);
+        $media->fill($new);
+        $media->save();
+    
+        return $media;
+    }
+
+    public function delete(?Media $media): void
+    {
+        $media ? Storage::disk('public')->delete($media->path) : null;
+        $media?->delete();
+    }
+
+    public function refresh(?UploadedFile $file, Model $model): void
+    {
+        if (!$file) {
+            return;
+        }
+        
+        $this->delete($model->media()->avatar()->first());
+        $this->save($file, $model);
     }
 }
