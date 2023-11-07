@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -35,6 +36,11 @@ class Card extends Model
     public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skill::class);
+    }
+
+    public function request(): HasOne
+    {
+        return $this->hasOne(CardRequest::class);
     }
 
     public function getSlugOptions(): SlugOptions
