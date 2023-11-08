@@ -10,6 +10,7 @@ use App\Http\Resources\User\UserResource;
 use App\Models\Media;
 use App\Models\User;
 use App\Services\FileService;
+use App\Services\Media\MediaService;
 use App\Services\User\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -21,11 +22,10 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(UpdateRequest $request, User $user, FileService $fileService): UserResource
+    public function update(UpdateRequest $request, User $user, MediaService $mediaService): UserResource
     {
-        $data = $request->validated();
-        $fileService->refresh($data['image'] ?? null, $user);
-        $user->updateOrFail($data);
+        $mediaService->refreshAvatarFor($user);
+        $user->updateOrFail($request->validated());
 
         return new UserResource($user);
     }

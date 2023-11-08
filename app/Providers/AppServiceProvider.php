@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(UploadContract::class, ImageUploadAction::class);
+        match (true) {
+            request()->hasFile('image')
+            => $this->app->bind(UploadContract::class, ImageUploadAction::class),
+            default => dd('not file'),
+        };
     }
 
     /**

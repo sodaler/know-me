@@ -3,6 +3,7 @@
 namespace App\Actions\Uploads;
 
 use App\Contracts\UploadContract;
+use App\DTOs\File;
 use App\Enums\MediaTypesEnums;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -10,21 +11,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageUploadAction implements UploadContract
 {
-    public function exec(UploadedFile $file, Model $model): array
+    public function exec(Model $model): File
     {
+        $uploadedFile = request()->files('image');
         $className = strtolower(class_basename($model));
         $path = Storage::disk('public')->putFileAs(
             "{$className}/{$model->id}",
-            $file,
-            $file->getClientOriginalName(),
+            $uploadedFile,
+            $uploadedFile->getClientOriginalName(),
         );
 
-        return [
-            'file_name' => $file->getClientOriginalName(),
-            'mime_type' => $file->getClientMimeType(),
-            'path' => $path,
-            'media_type' => MediaTypesEnums::AVATAR->value,
-            'size' => $file->getSize(),
-        ];
+        return new File(
+            fileName: $uploadedFile->getClientOriginalName(),
+            mimeType: $uploadedFile->getMimeType(),
+            path: $path,
+            mediaType: MediaTypesEnums::AVATAR->value,
+            size: $uploadedFile->getSize(),
+        );
     }
 }

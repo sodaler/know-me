@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Contracts;
+use App\DTOs\File;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\UploadedFile;
 
 interface UploadContract
 {
-    public function exec(UploadedFile $file, Model $model);
+    public function exec(Model $model): File;
 }
