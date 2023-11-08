@@ -126,3 +126,17 @@ services:
             - ./storage/docker/mongodb/production:/Databases/production
         networks:
             laravel:
+
+    elasticsearch:
+        image: bitnami/elasticsearch:latest
+        container_name: elasticsearch
+        environment:
+            - discovery.type=single-node
+            - xpack.security.enabled=false
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        volumes:
+            - ./storage/docker/elastic:/usr/share/elasticsearch/data
+        networks:
+            laravel:
