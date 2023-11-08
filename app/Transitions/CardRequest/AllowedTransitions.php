@@ -64,12 +64,12 @@ abstract class AllowedTransitions
     {
         $item = collect(AllowedTransitions::ALL)
             ->first(fn (array $t) =>
-                $t['current']->value === $current->getValue() &&
+                $t['current']->value === $current->value() &&
                 $t['next'] === $next
             );
 
         if (!$item) {
-            throw new InvalidArgumentException("No transition for {$current->getValue()} -> $next->value");
+            throw new InvalidArgumentException("No transition for {$current->value()} -> $next->value");
         }
 
         return new $item['transition'];
