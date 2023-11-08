@@ -21,6 +21,7 @@ class Card extends Model
         'rating',
         'alt',
         'slug',
+        'user_id',
     ];
 
     public function user(): BelongsTo

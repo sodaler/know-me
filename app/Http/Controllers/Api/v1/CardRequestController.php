@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers\Api\v1;
+
+use App\Actions\CardRequest\Status\ChangeCardRequestStatusAction;
+use App\Enums\Card\CardRequestsStatuses;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CardRequest\CardRequestResource;
+use App\Models\Card;
+use App\Models\CardRequest;
+
+class CardRequestController extends Controller
+{
+    public function __construct(private readonly ChangeCardRequestStatusAction $changeRequestStatus)
+    {
+    }
+
+    public function send(Card $card): CardRequestResource
+    {
+        $data = $this->updateStatus($card->request, CardRequestsStatuses::Pending);
+
+        $card->request->fresh();
+
+        return $data;
+    }
+
+    public function accept(Card $card): CardRequestResource
+    {
+        return $this->updateStatus($card->request, CardRequestsStatuses::Accepted);
+    }
+
+    public function cancel(Card $card): CardRequestResource
+    {
+        return $this->updateStatus($card->request, CardRequestsStatuses::Canceled);
+    }
+
+    public function complete(Card $card): CardRequestResource
+    {
+        return $this->updateStatus($card->request, CardRequestsStatuses::Completed);
+    }
+
+    public function inProgress(Card $card): CardRequestResource
+    {
+        return $this->updateStatus($card->request, CardRequestsStatuses::InProgress);
+    }
+
+    private function updateStatus(CardRequest $cardRequest, CardRequestsStatuses $nextStatus): CardRequestResource
+    {
+        $this->changeRequestStatus->execute($cardRequest, $nextStatus);
+
+        return new CardRequestResource($cardRequest);
+    }
+}

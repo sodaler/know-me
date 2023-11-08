@@ -2,7 +2,6 @@
 
 namespace App\States\CardRequest;
 
-use App\Events\Card\CardRequestsStatusChanged;
 use App\Models\CardRequest;
 use InvalidArgumentException;
 
