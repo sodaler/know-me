@@ -18,7 +18,6 @@
         "mongodb/laravel-mongodb": "^4.0",
         "moonshine/moonshine": "^1.63",
         "pusher/pusher-php-server": "^7.2",
-        "spatie/laravel-permission": "^6.0",
         "spatie/laravel-sluggable": "^3.5"
     },
     "require-dev": {
