@@ -17,11 +17,7 @@ class CardRequestController extends Controller
 
     public function send(Card $card): CardRequestResource
     {
-        $data = $this->updateStatus($card->request, CardRequestsStatuses::Pending);
-
-        $card->request->fresh();
-
-        return $data;
+        return $this->updateStatus($card->request, CardRequestsStatuses::Pending);
     }
 
     public function accept(Card $card): CardRequestResource
