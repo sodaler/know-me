@@ -3,80 +3,82 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Get(
- *   tags={"Skill"},
- *   path="/api/v1/skill",
- *   summary="Index",
- *   security={{"bearerAuth": {}}},
- *
- *   @OA\Response(
- *       response=200,
- *       description="OK",
- *
- *       @OA\JsonContent(
- *
- *           @OA\Property(property="data", type="array",
- *
- *               @OA\Items(
- *
- *                   @OA\Property(property="id", type="integer", example=1),
- *                   @OA\Property(property="title", type="string", example="Skill"),
- *               )
- *           ),
- *           @OA\Property(property="links", type="object",
- *               @OA\Property(property="first", type="string", example="http://localhost:8878/api/v1/skill?page=1"),
- *               @OA\Property(property="last", type="string", example="http://localhost:8878/api/v1/skill?page=1"),
- *               @OA\Property(property="prev", type="string", nullable=true),
- *               @OA\Property(property="next", type="string", nullable=true),
- *           ),
- *           @OA\Property(property="meta", type="object",
- *               @OA\Property(property="current_page", type="integer", example=1),
- *               @OA\Property(property="from", type="integer", example=1),
- *               @OA\Property(property="last_page", type="integer", example=1),
- *               @OA\Property(property="links", type="array",
- *
- *                   @OA\Items(
- *
- *                       @OA\Property(property="url", type="string", nullable=true),
- *                       @OA\Property(property="label", type="string", example="1"),
- *                       @OA\Property(property="active", type="boolean", example=true),
- *                   )
- *               ),
- *               @OA\Property(property="path", type="string", example="http://localhost:8878/api/v1/skill"),
- *               @OA\Property(property="per_page", type="integer", example=10),
- *               @OA\Property(property="to", type="integer", example=1),
- *               @OA\Property(property="total", type="integer", example=1),
- *           ),
- *       )
- *   ),
- *
- *   @OA\Response(response=401, description="Unauthorized"),
- * )
- *
- * @OA\Get(
- *     path="/api/v1/skill/{id}",
- *     summary="Show",
- *     tags={"Skill"},
- *     security={{"bearerAuth": {}}},
- *
- *     @OA\Parameter(name="id", in="path", required=true, description="Skill ID"),
- *
- *     @OA\Response(
- *         response=200,
- *         description="OK",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="object",
- *                 @OA\Property(property="id", type="integer", example=1),
- *                 @OA\Property(property="title", type="string", example="Skill"),
- *             )
- *         )
- *     )
- * )
- */
+#[
+    OA\Get(
+        path: "/api/v1/skills",
+        summary: "List of skills",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        tags: ["Skills"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "success",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "data",
+                            type: "array",
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(
+                                        property: "id",
+                                        type: "integer",
+                                        example: 1
+                                    ),
+                                    new OA\Property(
+                                        property: "title",
+                                        type: "string",
+                                        example: "example"
+                                    ),
+                                ]
+                            )
+                        ),
+                        new OA\Property(
+                            property: "links",
+                            properties: [
+                                new OA\Property(property: "first", type: "string", example: "http://localhost:8878/api/v1/skill?page=1"),
+                                new OA\Property(property: "last", type: "string", example: "http://localhost:8878/api/v1/skill?page=2"),
+                                new OA\Property(property: "prev", type: "string", nullable: true),
+                                new OA\Property(property: "next", type: "string", nullable: true),
+
+                            ],
+                            type: "object"
+                        ),
+                        new OA\Property(
+                            property: "meta",
+                            properties: [
+                                new OA\Property(property: "current_page", type: "integer", example: 1),
+                                new OA\Property(property: "from", type: "integer", example: 1),
+                                new OA\Property(property: "last_page", type: "integer", example: 1),
+                                new OA\Property(property: "links", type: "array",
+                                    items: new OA\Items(
+                                        properties: [
+                                            new OA\Property(property: "url", type: "string", nullable: true),
+                                            new OA\Property(property: "label", type: "string", example: 1),
+                                            new OA\Property(property: "active", type: "boolean", nullable: true),
+                                        ]
+                                    )
+                                ),
+                                new OA\Property(property: "path", type: "string", example: "http://localhost:8878/api/v1/skill"),
+                                new OA\Property(property: "per_page", type: "integer", example: 10),
+                                new OA\Property(property: "to", type: "integer", example: 1),
+                                new OA\Property(property: "total", type: "integer", example: 1),
+                            ],
+                            type: "object"
+                        )
+                    ],
+                    type: "object"
+                )
+            ),
+            new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: "Unauthorized"),
+        ],
+    )
+]
 class SkillController extends Controller
 {
     //

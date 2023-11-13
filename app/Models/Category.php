@@ -25,7 +25,6 @@ class Category extends Model
         return $this->belongsToMany(Card::class);
     }
 
-    
     public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');

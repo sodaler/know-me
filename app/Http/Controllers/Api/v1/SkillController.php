@@ -11,7 +11,7 @@ class SkillController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $skills = Skill::with(['categories'])->paginate(10);
+        $skills = Skill::paginate(10);
 
         return SkillResource::collection($skills);
     }

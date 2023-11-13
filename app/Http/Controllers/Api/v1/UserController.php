@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Contracts\UploadContract;
 use App\Enums\MediaTypesEnums;
 use App\Events\MediableNoteDeleted;
 use App\Http\Controllers\Controller;
@@ -24,9 +25,9 @@ class UserController extends Controller
     /**
      * @throws Throwable
      */
-    public function update(UpdateRequest $request, User $user, MediaService $mediaService): UserResource
+    public function update(UpdateRequest $request, User $user, MediaService $mediaService, UploadContract $uploadAction): UserResource
     {
-        $mediaService->update($user, MediaTypesEnums::AVATAR);
+        $mediaService->update($user, MediaTypesEnums::AVATAR, $uploadAction);
         $user->updateOrFail($request->validated());
 
         return new UserResource($user);
