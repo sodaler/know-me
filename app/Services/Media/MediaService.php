@@ -30,6 +30,11 @@ class MediaService
         return new $loaderName;
     }
 
+    protected function load(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): Media
+    {
+        return $this->getLoader($mediaType)->load($model);
+    }
+
     public function save(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): void
     {
         DB::transaction(function () use ($model, $mediaType) {
@@ -54,10 +59,7 @@ class MediaService
     public function update(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): void
     {
         DB::transaction(function () use ($model, $mediaType) {
-            /** @var Media $avatar */
-            $avatar = $this->getLoader($mediaType);
-
-            $this->delete($avatar);
+            $this->delete($this->load($model, $mediaType));
             $this->save($model, $mediaType);
         });
     }

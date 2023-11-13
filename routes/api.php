@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\CardController;
+use App\Http\Controllers\Api\v1\CardRequestController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ChatController;
 use App\Http\Controllers\Api\v1\OAuthController;
@@ -42,7 +43,14 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::get('cards', [CardController::class, 'index'])->name('card.index');
     Route::get('cards/{card}', [CardController::class, 'show'])->name('card.show');
     Route::post('cards/{card}/image', [CardController::class, 'addImage'])->name('card.image.add');
-    Route::delete('cards/{card}', [CardController::class, 'destroy'])->name('card.destroy');
+    Route::post('cards', [CardController::class, 'store'])->name('card.store');
+
+    Route::patch('cards/{card}/request/send', [CardRequestController::class, 'send'])->name('card.request.send');
+    Route::patch('cards/{card}/request/accept', [CardRequestController::class, 'accept'])->name('card.request.accept');
+    Route::patch('cards/{card}/request/cancel', [CardRequestController::class, 'cancel'])->name('card.request.cancel');
+    Route::patch('cards/{card}/request/in-progress', [CardRequestController::class, 'inProgress'])->name('card.request.in-progress');
+    Route::patch('cards/{card}/request/complete', [CardRequestController::class, 'complete'])->name('card.request.complete');
+
     Route::get('skills', [SkillController::class, 'index'])->name('skill.index');
     Route::get('skills/{skill}', [SkillController::class, 'show'])->name('skill.show');
 

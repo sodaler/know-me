@@ -28,6 +28,7 @@ class CardResource extends JsonResource
                 'phone' => $this->user->phone,
             ],
             'skills' => SkillResource::collection($this->whenLoaded('skills')),
+            'status' => $this->request->status->value()
         ];
     }
 }

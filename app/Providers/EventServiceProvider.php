@@ -2,16 +2,13 @@
 
 namespace App\Providers;
 
-use App\Events\MediableNoteDeleted;
-use App\Listeners\DeleteRelatedMedia;
+use App\Events\Card\CardCreated;
+use App\Listeners\Card\CreateCardRequest;
 use App\Listeners\ResetPasswordNotification;
-use App\Models\User;
-use App\Observers\UserObserver;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,8 +24,8 @@ class EventServiceProvider extends ServiceProvider
         PasswordReset::class => [
             ResetPasswordNotification::class,
         ],
-        MediableNoteDeleted::class => [
-            DeleteRelatedMedia::class,
+        CardCreated::class => [
+            CreateCardRequest::class,
         ],
     ];
 

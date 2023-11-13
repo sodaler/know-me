@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @property int $id
+ */
 class Card extends Model
 {
     use HasFactory, HasSlug;
@@ -22,6 +25,7 @@ class Card extends Model
         'rating',
         'alt',
         'slug',
+        'user_id',
     ];
 
     public function user(): BelongsTo
@@ -29,7 +33,7 @@ class Card extends Model
         return $this->belongsTo(User::class);
     }
 
-    
+
     public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');

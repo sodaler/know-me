@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Events\MediableNoteDeleted;
+use App\Events\Card\CardCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\AddImageRequest;
+use App\Http\Requests\Card\StoreRequest;
 use App\Http\Resources\Card\CardResource;
 use App\Models\Card;
 use App\Services\FileService;
@@ -25,20 +26,26 @@ class CardController extends Controller
         return new CardResource($card->load('skills'));
     }
 
-    public function destroy(Card $card): JsonResponse
+    public function store(StoreRequest $request): CardResource
     {
-        event(new MediableNoteDeleted($card));
-        $card->delete();
+        $requestData = $request->validated();
 
-        return response()->json([
-            'message' => __('messages.success_delete'),
-        ]);
+        $mentorId = auth()->user()->getAuthIdentifier();
+        $requestData['user_id'] = $mentorId;
 
+        $card = Card::create($requestData);
+
+        event(new CardCreated($card));
+
+        return new CardResource($card);
     }
 
     public function addImage(AddImageRequest $request, Card $card, FileService $fileService): JsonResponse
     {
-        $fileService->refresh($request->validated()['image'], $card);
+        $card->update([
+            'image' => $fileService
+                ->saveImage("card/{$card->id}", $request->file('image')),
+        ]);
 
         return response()->json([
             'message' => __('messages.success_update'),
