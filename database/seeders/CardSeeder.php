@@ -18,7 +18,7 @@ class CardSeeder extends Seeder
         $skills = Skill::all();
 
         Card::factory()
-            ->count(10)
+            ->count(20)
             ->create()
             ->each(function ($card) use ($categories, $skills) {
                 $card->categories()->attach($categories->random(rand(1, 3))->pluck('id')->toArray());

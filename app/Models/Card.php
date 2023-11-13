@@ -56,7 +56,9 @@ class Card extends Model
     {
         return [
             'title' => $this->title,
-            'skills' => $this->skills->only(['title']),
+            'skills' => $this->skills->only(['id, title']),
+            'created_at' => $this->created_at,
+            'rating' => $this->rating
         ];
     }
 
