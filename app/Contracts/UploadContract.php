@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Contracts;
+use App\Contracts\Models\HasMediaRelationInterface;
 use App\DTOs\File;
-use Illuminate\Database\Eloquent\Model;
+use App\Enums\MediaTypesEnums;
 
 interface UploadContract
 {
-    public function exec(Model $model): File;
+    public function exec(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): File;
 }
