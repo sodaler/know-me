@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\Models\HasMediaRelationInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use MongoDB\Laravel\Eloquent\HybridRelations;
 use MongoDB\Laravel\Relations\HasMany as HasManyMongo;
+use MoonShine\Fields\MorphOne;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMediaRelationInterface
 {
     use HasApiTokens, HasFactory, HybridRelations, Notifiable;
 
@@ -25,7 +27,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'image',
         'email',
         'password',
     ];
@@ -53,6 +54,11 @@ class User extends Authenticatable
     public function cards(): HasMany
     {
         return $this->hasMany(Card::class);
+    }
+
+    public function media(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'mediable');
     }
 
     public function memberMessages(): HasManyMongo
