@@ -2,29 +2,17 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Enums\Filters\Card\FiltersEnum;
+use App\Actions\Search\Card\FilterAction;
 use App\Http\Controllers\Controller;
-use App\Models\Card;
-use Elastic\ScoutDriverPlus\Support\Query;
-use Illuminate\Http\Request;
+use App\Http\Requests\Filter\GetCardsRequest;
 use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
-    public function index(Request $request): Collection
+    public function index(GetCardsRequest $request): Collection
     {
-        $filters = $request->collect('filters');
-
-        $query = Query::bool();
-
-        foreach ($filters as $name => $value) {
-            $filter = FiltersEnum::from($name)->createFilter($value);
-
-            $query->should($filter->handle());
-        }
-
-        return Card::searchQuery($query)
-            ->paginate(10)
-            ->models();
+        return FilterAction::execute(
+            $request->collect('filters')
+        );
     }
 }
