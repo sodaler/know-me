@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Elastic\ScoutDriverPlus\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Card extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, Searchable;
 
     protected $fillable = [
         'title',
@@ -58,5 +59,21 @@ class Card extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'created_at' => $this->created_at,
+            'rating' => $this->rating,
+            'skills' => $this->skills->pluck('slug'),
+            'categories' => $this->categories->pluck('slug')
+        ];
+    }
+
+    public function searchableWith(): array
+    {
+        return ['skills', 'categories'];
     }
 }
