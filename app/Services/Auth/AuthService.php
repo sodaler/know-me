@@ -3,9 +3,9 @@
 namespace App\Services\Auth;
 
 use App\Enums\Auth\GrantTypeEnums;
-use App\Enums\Http\MethodEnums;
 use Exception;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class AuthService
 {
@@ -62,7 +62,7 @@ class AuthService
         return $this->handle(
             $this->generateTokens(
                 $this->getCredentialsFromArray($data),
-                MethodEnums::POST->value,
+                HttpRequest::METHOD_POST,
                 GrantTypeEnums::PASSWORD->value
             )
         );

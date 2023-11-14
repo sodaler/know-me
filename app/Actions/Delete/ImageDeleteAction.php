@@ -2,7 +2,7 @@
 
 namespace App\Actions\Delete;
 
-class ImageDeleteAction
+final class ImageDeleteAction
 {
-
+    // TODO
 }

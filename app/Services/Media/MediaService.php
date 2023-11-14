@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaService
 {
-    public function __construct(
-        private readonly UploadContract $uploadAction
-    ) {}
-
-    /**
-     * @param MediaTypesEnums $mediaType
-     * @return MediaTypeLoaderInterface
-     */
     protected function getLoader(MediaTypesEnums $mediaType): MediaTypeLoaderInterface
     {
         $loaderName = match ($mediaType) {
@@ -35,10 +27,10 @@ class MediaService
         return $this->getLoader($mediaType)->load($model);
     }
 
-    public function save(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): void
+    public function save(HasMediaRelationInterface $model, MediaTypesEnums $mediaType, UploadContract $uploadAction): void
     {
-        DB::transaction(function () use ($model, $mediaType) {
-            $new = $this->uploadAction->exec($model, $mediaType);
+        DB::transaction(function () use ($uploadAction, $model, $mediaType) {
+            $new = $uploadAction->exec($model, $mediaType);
 
             $media = $model->media()->firstOrNew(['path' => $new->path]);
             $media->fill($new->toArray());
@@ -56,11 +48,11 @@ class MediaService
         }
     }
 
-    public function update(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): void
+    public function update(HasMediaRelationInterface $model, MediaTypesEnums $mediaType, UploadContract $uploadAction): void
     {
-        DB::transaction(function () use ($model, $mediaType) {
+        DB::transaction(function () use ($uploadAction, $model, $mediaType) {
             $this->delete($this->load($model, $mediaType));
-            $this->save($model, $mediaType);
+            $this->save($model, $mediaType, $uploadAction);
         });
     }
 }

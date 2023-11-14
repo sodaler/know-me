@@ -8,11 +8,7 @@ use Illuminate\Http\UploadedFile;
 
 class CategoryService
 {
-    public function __construct(
-        private readonly FileService $fileService
-    ) {}
-
-    public function store(array $data): Category
+    public function store(array $data, FileService $fileService): Category
     {
         $image = $this->extractImage($data);
 
@@ -20,12 +16,12 @@ class CategoryService
 
         $this->attachCards($category, $data);
 
-        $this->saveCategoryImage($category, $image);
+        $this->saveCategoryImage($category, $image, $fileService);
 
         return $category;
     }
 
-    public function update(Category $category, array $data): Category
+    public function update(Category $category, array $data, FileService $fileService): Category
     {
         $image = $this->extractImage($data);
 
@@ -33,7 +29,7 @@ class CategoryService
 
         $category->updateOrFail($data);
 
-        $this->saveCategoryImage($category, $image);
+        $this->saveCategoryImage($category, $image, $fileService);
 
         return $category->fresh();
     }
@@ -65,10 +61,10 @@ class CategoryService
         }
     }
 
-    private function saveCategoryImage(Category $category, ?UploadedFile $image): void
+    private function saveCategoryImage(Category $category, ?UploadedFile $image, FileService $fileService): void
     {
         if ($image) {
-            $this->fileService->save($image, $category);
+            $fileService->saveImage("/category/{$category->id}/{$image->getClientOriginalName()}", $image);
         }
     }
 

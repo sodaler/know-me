@@ -23,6 +23,7 @@ class CategoryResource extends JsonResource
             'slug' => $this->slug,
             'image' => $this->image,
             'alt' => $this->image_alt,
+            'card_ids' => $this->cards->pluck('id'),
         ];
     }
 }

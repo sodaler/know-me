@@ -11,10 +11,6 @@ use App\Models\CardRequest;
 
 class CardRequestController extends Controller
 {
-    public function __construct(private readonly ChangeCardRequestStatusAction $changeRequestStatus)
-    {
-    }
-
     public function send(Card $card): CardRequestResource
     {
         return $this->updateStatus($card->request, CardRequestsStatuses::Pending);
@@ -42,7 +38,7 @@ class CardRequestController extends Controller
 
     private function updateStatus(CardRequest $cardRequest, CardRequestsStatuses $nextStatus): CardRequestResource
     {
-        $this->changeRequestStatus->execute($cardRequest, $nextStatus);
+        ChangeCardRequestStatusAction::execute($cardRequest, $nextStatus);
 
         return new CardRequestResource($cardRequest);
     }

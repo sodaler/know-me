@@ -14,8 +14,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('card_skill', function (Blueprint $table) {
-            $table->id();
-
             $table->foreignIdFor(Card::class)
                 ->nullable()
                 ->constrained()
@@ -25,6 +23,8 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
+
+            $table->unique(['card_id', 'skill_id']);
 
             $table->timestamps();
         });

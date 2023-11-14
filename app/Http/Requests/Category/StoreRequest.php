@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'image' => [
-                'required',
+                'nullable',
                 File::types(config('image.allowed_exts'))
                     ->max(config('image.max_size')),
             ],

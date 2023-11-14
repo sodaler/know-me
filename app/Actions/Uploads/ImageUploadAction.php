@@ -8,7 +8,7 @@ use App\DTOs\File;
 use App\Enums\MediaTypesEnums;
 use Illuminate\Support\Facades\Storage;
 
-class ImageUploadAction implements UploadContract
+final class ImageUploadAction implements UploadContract
 {
     public function exec(HasMediaRelationInterface $model, MediaTypesEnums $mediaType): File
     {

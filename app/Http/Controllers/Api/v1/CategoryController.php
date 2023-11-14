@@ -9,19 +9,11 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Category\CategoryWithCardsResource;
 use App\Models\Category;
 use App\Services\Category\CategoryService;
+use App\Services\FileService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function __construct(
-        private readonly CategoryService $categoryService
-    ) {
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): array
     {
         $categories = Category::paginate(10);
@@ -29,39 +21,27 @@ class CategoryController extends Controller
         return CategoryResource::collection($categories)->resolve();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRequest $request): CategoryResource
+    public function store(StoreRequest $request, CategoryService $categoryService, FileService $fileService): CategoryResource
     {
         $data = $request->validated();
 
-        $category = $this->categoryService->store($data);
+        $category = $categoryService->store($data, $fileService);
 
         return new CategoryResource($category);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Category $category): CategoryResource
     {
         return new CategoryResource($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRequest $request, Category $category): CategoryResource
+    public function update(UpdateRequest $request, Category $category, CategoryService $categoryService, FileService $fileService): CategoryResource
     {
         return new CategoryResource(
-            $this->categoryService->update($category, $request->validated())
+            $categoryService->update($category, $request->validated(), $fileService)
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Category $category): JsonResponse
     {
         $category->cards()->detach();

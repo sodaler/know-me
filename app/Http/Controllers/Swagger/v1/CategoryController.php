@@ -3,264 +3,288 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Post(
- *     path="/api/v1/category",
- *     summary="Create",
- *     tags={"Category"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\RequestBody(
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="name", type="string", example="title example"),
- *                     @OA\Property(property="email", type="string", example="description example"),
- *                     @OA\Property(property="tag_ids", type="array", @OA\Items(ref=""), example="1, 2, 3")
- *                 )
- *             }
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=201,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="name", type="string", example="title example"),
- *                     @OA\Property(property="email", type="string", example="description example"),
- *                     @OA\Property(property="first_name", type="string", example="firstname example"),
- *                     @OA\Property(property="last_name", type="string", example="lastname example"),
- *                     @OA\Property(property="birthday", type="date", example="2023-07-18"),
- *                     @OA\Property(property="group", type="object",
- *                          @OA\Property(property="id", type="integer", example=1),
- *                          @OA\Property(property="title", type="string", example="group title"),
- *                     ),
- *                     @OA\Property(property="role", type="object",
- *                          @OA\Property(property="role", type="integer", example=1),
- *                          @OA\Property(property="roleHuman", type="string", example="Student"),
- *                     ),
- *                     @OA\Property(property="address", type="object",
- *                          @OA\Property(property="city", type="string", example="moscow"),
- *                          @OA\Property(property="street", type="string", example="lenina"),
- *                          @OA\Property(property="house", type="integer", example=10),
- *                     ),
- *                 )
- *             }
- *         ),
- *     ),
- * ),
- *
- * @OA\Get(
- *     path="/api/students",
- *     summary="Index",
- *     tags={"Student"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="array", @OA\Items(
- *                 @OA\Property(property="name", type="string", example="title example"),
- *                 @OA\Property(property="email", type="string", example="description example"),
- *                 @OA\Property(property="first_name", type="string", example="firstname example"),
- *                 @OA\Property(property="last_name", type="string", example="lastname example"),
- *                 @OA\Property(property="birthday", type="date", example="2023-07-18"),
- *                 @OA\Property(property="group", type="object",
- *                      @OA\Property(property="id", type="integer", example=1),
- *                      @OA\Property(property="title", type="string", example="group title"),
- *                 ),
- *                 @OA\Property(property="role", type="object",
- *                      @OA\Property(property="role", type="integer", example=1),
- *                      @OA\Property(property="roleHuman", type="string", example="Student"),
- *                 ),
- *                 @OA\Property(property="address", type="object",
- *                      @OA\Property(property="city", type="string", example="moscow"),
- *                      @OA\Property(property="street", type="string", example="lenina"),
- *                      @OA\Property(property="house", type="integer", example=10),
- *                 ),
- *             )),
- *         ),
- *     ),
- * ),
- *
- * @OA\Get(
- *     path="/api/students/{student}",
- *     summary="Show",
- *     tags={"Student"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\Parameter(
- *         description="Student's id",
- *         in="path",
- *         name="student",
- *         required=true,
- *         example=1
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="array", @OA\Items(
- *                 @OA\Property(property="name", type="string", example="title example"),
- *                 @OA\Property(property="email", type="string", example="description example"),
- *                 @OA\Property(property="first_name", type="string", example="firstname example"),
- *                 @OA\Property(property="last_name", type="string", example="lastname example"),
- *                 @OA\Property(property="birthday", type="date", example="2023-07-18"),
- *                 @OA\Property(property="group", type="object",
- *                      @OA\Property(property="id", type="integer", example=1),
- *                      @OA\Property(property="title", type="string", example="group title"),
- *                 ),
- *                 @OA\Property(property="role", type="object",
- *                      @OA\Property(property="role", type="integer", example=1),
- *                      @OA\Property(property="roleHuman", type="string", example="Student"),
- *                 ),
- *                 @OA\Property(property="address", type="object",
- *                      @OA\Property(property="city", type="string", example="moscow"),
- *                      @OA\Property(property="street", type="string", example="lenina"),
- *                      @OA\Property(property="house", type="integer", example=10),
- *                 ),
- *             )),
- *         ),
- *     ),
- * ),
- *
- * @OA\Patch(
- *     path="/api/students/{student}",
- *     summary="Update",
- *     tags={"Student"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\Parameter(
- *         description="Student's id",
- *         in="path",
- *         name="student",
- *         required=true,
- *         example=1
- *     ),
- *
- *     @OA\RequestBody(
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="name", type="string", example="title example"),
- *                     @OA\Property(property="email", type="string", example="description example"),
- *                     @OA\Property(property="first_name", type="string", example="firstname example"),
- *                     @OA\Property(property="last_name", type="string", example="lastname example"),
- *                     @OA\Property(property="birthday", type="date", example="2023-07-18"),
- *                     @OA\Property(property="group_id", type="integer", example=5),
- *                     @OA\Property(property="role", type="integer", example=2),
- *                     @OA\Property(property="address", type="object",
- *                          @OA\Property(property="city", type="string", example="moscow"),
- *                          @OA\Property(property="street", type="string", example="lenina"),
- *                          @OA\Property(property="house", type="integer", example=10),
- *                     ),
- *                 )
- *             }
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=201,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="name", type="string", example="title example"),
- *                     @OA\Property(property="email", type="string", example="description example"),
- *                     @OA\Property(property="first_name", type="string", example="firstname example"),
- *                     @OA\Property(property="last_name", type="string", example="lastname example"),
- *                     @OA\Property(property="birthday", type="date", example="2023-07-18"),
- *                     @OA\Property(property="group", type="object",
- *                          @OA\Property(property="id", type="integer", example=1),
- *                          @OA\Property(property="title", type="string", example="group title"),
- *                     ),
- *                     @OA\Property(property="role", type="object",
- *                          @OA\Property(property="role", type="integer", example=1),
- *                          @OA\Property(property="roleHuman", type="string", example="Student"),
- *                     ),
- *                     @OA\Property(property="address", type="object",
- *                          @OA\Property(property="city", type="string", example="moscow"),
- *                          @OA\Property(property="street", type="string", example="lenina"),
- *                          @OA\Property(property="house", type="integer", example=10),
- *                     ),
- *                 )
- *             }
- *         ),
- *     ),
- * ),
- *
- * @OA\Delete(
- *     path="/api/students/{student}",
- *     summary="Delete",
- *     tags={"Student"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\Parameter(
- *         description="Student's id",
- *         in="path",
- *         name="student",
- *         required=true,
- *         example=1
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="message", type="string", example="deleted"),
- *         ),
- *     ),
- * ),
- *
- * @OA\Get(
- *     path="/api/students/{student}/generate_pdf",
- *     summary="User info export via pdf",
- *     tags={"Student"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\Parameter(
- *         description="Student's id",
- *         in="path",
- *         name="student",
- *         required=true,
- *         example=1
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="OK",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="message", type="string", example="PDF successfully generated"),
- *             @OA\Property(property="download_link", type="string", example="http://localhost:8000/storage/reports/user_1_report.pdf")
- *         )
- *     )
- * )
- */
+#[
+    OA\Post(
+        path: "/api/v1/categories",
+        summary: "Create",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        requestBody: new OA\RequestBody(required: true,
+            content: new OA\JsonContent(
+                allOf: [
+                    new OA\Schema(
+                        required: ["title", "description"],
+                        properties: [
+                            new OA\Property(property: "title", description: "Category's title", type: "string", example: "example title"),
+                            new OA\Property(property: "description", description: "Category's description", type: "string", example: "example description"),
+                            new OA\Property(property: "card_ids", description: "Category's cards", type: "array", items: new OA\Items(
+                                properties: [
+                                    new OA\Property(
+                                        property: "card_id"
+                                    ),
+                                ],
+                            ), example: [1, 2, 3]),
+                        ]
+                    )
+                ],
+            ),
+        ),
+        tags: ["Categories"],
+        responses: [
+            new OA\Response(response: Response::HTTP_CREATED, description: "Category created",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "id",
+                            type: "integer",
+                            example: 1
+                        ),
+                        new OA\Property(
+                            property: "title",
+                            type: "string",
+                            example: "title"
+                        ),
+                        new OA\Property(
+                            property: "description",
+                            type: "string",
+                            example: "description"
+                        ),
+                        new OA\Property(
+                            property: "slug",
+                            type: "string",
+                            example: "title-slug"
+                        ),
+                    ],
+                ),
+            ),
+            new OA\Response(response: Response::HTTP_INTERNAL_SERVER_ERROR, description: "Server Error"),
+        ]
+    ),
+
+    OA\Get(
+        path: "/api/v1/categories",
+        summary: "Index",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        tags: ["Categories"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Success",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "id",
+                            type: "integer",
+                            example: 1,
+                        ),
+                        new OA\Property(
+                            property: "title",
+                            type: "string",
+                            example: "title",
+                        ),
+                        new OA\Property(
+                            property: "description",
+                            type: "string",
+                            example: "description",
+                        ),
+                        new OA\Property(
+                            property: "slug",
+                            type: "string",
+                            example: "title",
+                        ),
+                        new OA\Property(
+                            property: "image",
+                            type: "string",
+                            example: "img.png",
+                        ),
+                        new OA\Property(
+                            property: "alt",
+                            type: "string",
+                            example: "image",
+                        ),
+                        new OA\Property(property: "card_ids", description: "Category's cards", type: "array", items: new OA\Items(
+                            properties: [
+                                new OA\Property(
+                                    property: "card_id"
+                                ),
+                            ],
+                        ), example: [1, 2, 3]),
+                    ],
+                ),
+            ),
+        ],
+    ),
+
+    OA\Get(
+        path: "/api/v1/categories/{category}",
+        summary: "Show",
+        security: [
+            [
+                "bearerAuth" => []
+            ]
+        ],
+        tags: ["Categories"],
+        parameters: [
+            new OA\Parameter(
+                name: "category",
+                description: "Category's id",
+                in: "path",
+                required: true,
+                example: 1,
+            ),
+        ],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Success",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "id",
+                            type: "integer",
+                            example: 1,
+                        ),
+                        new OA\Property(
+                            property: "title",
+                            type: "string",
+                            example: "title",
+                        ),
+                        new OA\Property(
+                            property: "description",
+                            type: "string",
+                            example: "description",
+                        ),
+                        new OA\Property(
+                            property: "slug",
+                            type: "string",
+                            example: "title",
+                        ),
+                        new OA\Property(
+                            property: "image",
+                            type: "string",
+                            example: "img.png",
+                        ),
+                        new OA\Property(
+                            property: "alt",
+                            type: "string",
+                            example: "image",
+                        ),
+                        new OA\Property(property: "card_ids", description: "Category's cards", type: "array", items: new OA\Items(
+                            properties: [
+                                new OA\Property(
+                                    property: "card_id"
+                                ),
+                            ],
+                        ), example: [1, 2, 3]),
+                    ],
+                ),
+            ),
+        ],
+    ),
+
+    OA\Patch(
+        path: "/api/v1/categories/{category}",
+        summary: "Update",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        requestBody: new OA\RequestBody(required: true,
+            content: new OA\JsonContent(
+                allOf: [
+                    new OA\Schema(
+                        properties: [
+                            new OA\Property(property: "title", description: "Category's title", type: "string", example: "example title"),
+                            new OA\Property(property: "description", description: "Category's description", type: "string", example: "example description"),
+                            new OA\Property(property: "card_ids", description: "Category's cards", type: "array", items: new OA\Items(
+                                properties: [
+                                    new OA\Property(
+                                        property: "card_id"
+                                    ),
+                                ],
+                            ), example: [1, 2, 3]),
+                        ]
+                    )
+                ],
+            ),
+        ),
+        tags: ["Categories"],
+        parameters: [
+            new OA\Parameter(
+                name: "category",
+                description: "Category's id",
+                in: "path",
+                required: true,
+                example: 1,
+            ),
+        ],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Category updated",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "id",
+                            type: "integer",
+                            example: 1
+                        ),
+                        new OA\Property(
+                            property: "title",
+                            type: "string",
+                            example: "title"
+                        ),
+                        new OA\Property(
+                            property: "description",
+                            type: "string",
+                            example: "description"
+                        ),
+                        new OA\Property(
+                            property: "slug",
+                            type: "string",
+                            example: "title-slug"
+                        ),
+                    ],
+                ),
+            ),
+            new OA\Response(response: Response::HTTP_INTERNAL_SERVER_ERROR, description: "Server Error"),
+        ]
+    ),
+
+    OA\Delete(
+        path: "/api/v1/categories/{category}",
+        summary: "Delete",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        tags: ["Categories"],
+        parameters: [
+            new OA\Parameter(
+                name: "category",
+                description: "Category's id",
+                in: "path",
+                required: true,
+                example: 1,
+            ),
+        ],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Category deleted",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: "message", type: "string", example: "Category deleted"),
+                    ],
+                ),
+            ),
+        ],
+    ),
+]
 class CategoryController extends Controller
 {
     //

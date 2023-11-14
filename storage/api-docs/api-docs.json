@@ -5,7 +5,14 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/": {},
+        "/api/": {
+            "servers": [
+                {
+                    "url": "http://localhost:8878",
+                    "description": "local server"
+                }
+            ]
+        },
         "/api/v1/card": {
             "get": {
                 "tags": [
@@ -272,215 +279,80 @@
                 ]
             }
         },
-        "/api/v1/category": {
-            "post": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Create",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "name": {
-                                                "type": "string",
-                                                "example": "title example"
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "example": "description example"
-                                            },
-                                            "tag_ids": {
-                                                "type": "array",
-                                                "items": {
-                                                    "$ref": ""
-                                                },
-                                                "example": "1, 2, 3"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "properties": {
-                                                "name": {
-                                                    "type": "string",
-                                                    "example": "title example"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "example": "description example"
-                                                },
-                                                "first_name": {
-                                                    "type": "string",
-                                                    "example": "firstname example"
-                                                },
-                                                "last_name": {
-                                                    "type": "string",
-                                                    "example": "lastname example"
-                                                },
-                                                "birthday": {
-                                                    "type": "string",
-                                                    "format": "date",
-                                                    "example": "2023-07-18"
-                                                },
-                                                "group": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "title": {
-                                                            "type": "string",
-                                                            "example": "group title"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "role": {
-                                                    "properties": {
-                                                        "role": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "roleHuman": {
-                                                            "type": "string",
-                                                            "example": "Student"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "address": {
-                                                    "properties": {
-                                                        "city": {
-                                                            "type": "string",
-                                                            "example": "moscow"
-                                                        },
-                                                        "street": {
-                                                            "type": "string",
-                                                            "example": "lenina"
-                                                        },
-                                                        "house": {
-                                                            "type": "integer",
-                                                            "example": 10
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/students": {
+        "/api/v1/cards": {
             "get": {
                 "tags": [
-                    "Student"
+                    "Cards"
                 ],
                 "summary": "Index",
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "description"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "img.png"
+                                        },
+                                        "alt": {
+                                            "type": "string",
+                                            "example": "image-alt"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "title-slug"
+                                        },
+                                        "user": {
+                                            "description": "Card's user",
                                             "type": "array",
                                             "items": {
                                                 "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
                                                     "name": {
                                                         "type": "string",
-                                                        "example": "title example"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "description example"
-                                                    },
-                                                    "first_name": {
-                                                        "type": "string",
-                                                        "example": "firstname example"
-                                                    },
-                                                    "last_name": {
-                                                        "type": "string",
-                                                        "example": "lastname example"
-                                                    },
-                                                    "birthday": {
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "2023-07-18"
-                                                    },
-                                                    "group": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "title": {
-                                                                "type": "string",
-                                                                "example": "group title"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    },
-                                                    "role": {
-                                                        "properties": {
-                                                            "role": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "roleHuman": {
-                                                                "type": "string",
-                                                                "example": "Student"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    },
-                                                    "address": {
-                                                        "properties": {
-                                                            "city": {
-                                                                "type": "string",
-                                                                "example": "moscow"
-                                                            },
-                                                            "street": {
-                                                                "type": "string",
-                                                                "example": "lenina"
-                                                            },
-                                                            "house": {
-                                                                "type": "integer",
-                                                                "example": 10
-                                                            }
-                                                        },
-                                                        "type": "object"
+                                                        "example": "Vasya"
                                                     }
                                                 },
                                                 "type": "object"
                                             }
+                                        },
+                                        "skills": {
+                                            "description": "skills",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "card title"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "created"
                                         }
                                     },
                                     "type": "object"
@@ -496,99 +368,319 @@
                 ]
             }
         },
-        "/api/students/{student}": {
+        "/api/v1/cards/{card}": {
             "get": {
                 "tags": [
-                    "Student"
+                    "Cards"
                 ],
                 "summary": "Show",
                 "parameters": [
                     {
-                        "name": "student",
+                        "name": "card",
                         "in": "path",
-                        "description": "Student's id",
+                        "description": "Card's id",
                         "required": true,
                         "example": 1
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "description"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "img.png"
+                                        },
+                                        "alt": {
+                                            "type": "string",
+                                            "example": "image-alt"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "title-slug"
+                                        },
+                                        "user": {
+                                            "description": "Card's user",
                                             "type": "array",
                                             "items": {
                                                 "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
                                                     "name": {
                                                         "type": "string",
-                                                        "example": "title example"
-                                                    },
-                                                    "email": {
-                                                        "type": "string",
-                                                        "example": "description example"
-                                                    },
-                                                    "first_name": {
-                                                        "type": "string",
-                                                        "example": "firstname example"
-                                                    },
-                                                    "last_name": {
-                                                        "type": "string",
-                                                        "example": "lastname example"
-                                                    },
-                                                    "birthday": {
-                                                        "type": "string",
-                                                        "format": "date",
-                                                        "example": "2023-07-18"
-                                                    },
-                                                    "group": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "title": {
-                                                                "type": "string",
-                                                                "example": "group title"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    },
-                                                    "role": {
-                                                        "properties": {
-                                                            "role": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "roleHuman": {
-                                                                "type": "string",
-                                                                "example": "Student"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    },
-                                                    "address": {
-                                                        "properties": {
-                                                            "city": {
-                                                                "type": "string",
-                                                                "example": "moscow"
-                                                            },
-                                                            "street": {
-                                                                "type": "string",
-                                                                "example": "lenina"
-                                                            },
-                                                            "house": {
-                                                                "type": "integer",
-                                                                "example": 10
-                                                            }
-                                                        },
-                                                        "type": "object"
+                                                        "example": "Vasya"
                                                     }
                                                 },
                                                 "type": "object"
                                             }
+                                        },
+                                        "skills": {
+                                            "description": "skills",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "card title"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "created"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "description"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "img.png"
+                                        },
+                                        "alt": {
+                                            "type": "string",
+                                            "example": "image"
+                                        },
+                                        "card_ids": {
+                                            "description": "Category's cards",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "card_id": {}
+                                                },
+                                                "type": "object"
+                                            },
+                                            "example": [
+                                                1,
+                                                2,
+                                                3
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "required": [
+                                            "title",
+                                            "description"
+                                        ],
+                                        "properties": {
+                                            "title": {
+                                                "description": "Category's title",
+                                                "type": "string",
+                                                "example": "example title"
+                                            },
+                                            "description": {
+                                                "description": "Category's description",
+                                                "type": "string",
+                                                "example": "example description"
+                                            },
+                                            "card_ids": {
+                                                "description": "Category's cards",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "card_id": {}
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "example": [
+                                                    1,
+                                                    2,
+                                                    3
+                                                ]
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "description"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "title-slug"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/categories/{category}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Show",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Category's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "description"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "img.png"
+                                        },
+                                        "alt": {
+                                            "type": "string",
+                                            "example": "image"
+                                        },
+                                        "card_ids": {
+                                            "description": "Category's cards",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "card_id": {}
+                                                },
+                                                "type": "object"
+                                            },
+                                            "example": [
+                                                1,
+                                                2,
+                                                3
+                                            ]
                                         }
                                     },
                                     "type": "object"
@@ -605,28 +697,28 @@
             },
             "delete": {
                 "tags": [
-                    "Student"
+                    "Categories"
                 ],
                 "summary": "Delete",
                 "parameters": [
                     {
-                        "name": "student",
+                        "name": "category",
                         "in": "path",
-                        "description": "Student's id",
+                        "description": "Category's id",
                         "required": true,
                         "example": 1
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Category deleted",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "deleted"
+                                            "example": "Category deleted"
                                         }
                                     },
                                     "type": "object"
@@ -643,70 +735,50 @@
             },
             "patch": {
                 "tags": [
-                    "Student"
+                    "Categories"
                 ],
                 "summary": "Update",
                 "parameters": [
                     {
-                        "name": "student",
+                        "name": "category",
                         "in": "path",
-                        "description": "Student's id",
+                        "description": "Category's id",
                         "required": true,
                         "example": 1
                     }
                 ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "allOf": [
                                     {
                                         "properties": {
-                                            "name": {
+                                            "title": {
+                                                "description": "Category's title",
                                                 "type": "string",
-                                                "example": "title example"
+                                                "example": "example title"
                                             },
-                                            "email": {
+                                            "description": {
+                                                "description": "Category's description",
                                                 "type": "string",
-                                                "example": "description example"
+                                                "example": "example description"
                                             },
-                                            "first_name": {
-                                                "type": "string",
-                                                "example": "firstname example"
-                                            },
-                                            "last_name": {
-                                                "type": "string",
-                                                "example": "lastname example"
-                                            },
-                                            "birthday": {
-                                                "type": "string",
-                                                "format": "date",
-                                                "example": "2023-07-18"
-                                            },
-                                            "group_id": {
-                                                "type": "integer",
-                                                "example": 5
-                                            },
-                                            "role": {
-                                                "type": "integer",
-                                                "example": 2
-                                            },
-                                            "address": {
-                                                "properties": {
-                                                    "city": {
-                                                        "type": "string",
-                                                        "example": "moscow"
+                                            "card_ids": {
+                                                "description": "Category's cards",
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "card_id": {}
                                                     },
-                                                    "street": {
-                                                        "type": "string",
-                                                        "example": "lenina"
-                                                    },
-                                                    "house": {
-                                                        "type": "integer",
-                                                        "example": 10
-                                                    }
+                                                    "type": "object"
                                                 },
-                                                "type": "object"
+                                                "example": [
+                                                    1,
+                                                    2,
+                                                    3
+                                                ]
                                             }
                                         },
                                         "type": "object"
@@ -717,129 +789,36 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "properties": {
-                                                "name": {
-                                                    "type": "string",
-                                                    "example": "title example"
-                                                },
-                                                "email": {
-                                                    "type": "string",
-                                                    "example": "description example"
-                                                },
-                                                "first_name": {
-                                                    "type": "string",
-                                                    "example": "firstname example"
-                                                },
-                                                "last_name": {
-                                                    "type": "string",
-                                                    "example": "lastname example"
-                                                },
-                                                "birthday": {
-                                                    "type": "string",
-                                                    "format": "date",
-                                                    "example": "2023-07-18"
-                                                },
-                                                "group": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "title": {
-                                                            "type": "string",
-                                                            "example": "group title"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "role": {
-                                                    "properties": {
-                                                        "role": {
-                                                            "type": "integer",
-                                                            "example": 1
-                                                        },
-                                                        "roleHuman": {
-                                                            "type": "string",
-                                                            "example": "Student"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "address": {
-                                                    "properties": {
-                                                        "city": {
-                                                            "type": "string",
-                                                            "example": "moscow"
-                                                        },
-                                                        "street": {
-                                                            "type": "string",
-                                                            "example": "lenina"
-                                                        },
-                                                        "house": {
-                                                            "type": "integer",
-                                                            "example": 10
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/students/{student}/generate_pdf": {
-            "get": {
-                "tags": [
-                    "Student"
-                ],
-                "summary": "User info export via pdf",
-                "parameters": [
-                    {
-                        "name": "student",
-                        "in": "path",
-                        "description": "Student's id",
-                        "required": true,
-                        "example": 1
-                    }
-                ],
-                "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Category updated",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "PDF successfully generated"
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
                                         },
-                                        "download_link": {
+                                        "title": {
                                             "type": "string",
-                                            "example": "http://localhost:8000/storage/reports/user_1_report.pdf"
+                                            "example": "title"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "description"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "title-slug"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 },
                 "security": [
@@ -856,19 +835,26 @@
                 ],
                 "summary": "Login",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "allOf": [
                                     {
+                                        "required": [
+                                            "email",
+                                            "password"
+                                        ],
                                         "properties": {
                                             "email": {
+                                                "description": "email",
                                                 "type": "string",
-                                                "example": "email@mail.com"
+                                                "example": "hello1234@mail.ru"
                                             },
                                             "password": {
+                                                "description": "password",
                                                 "type": "string",
-                                                "example": "password"
+                                                "example": "hello1234@mail.ru"
                                             }
                                         },
                                         "type": "object"
@@ -880,37 +866,35 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Successful login",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
-                                            "properties": {
-                                                "token_type": {
-                                                    "type": "string",
-                                                    "example": "Bearer"
-                                                },
-                                                "expires_in": {
-                                                    "type": "integer",
-                                                    "example": 3600
-                                                },
-                                                "access_token": {
-                                                    "type": "string",
-                                                    "example": "sdfsddsdsgfdweqwdv"
-                                                },
-                                                "refresh_token": {
-                                                    "type": "string",
-                                                    "example": "sdfsddsdsgfdweqwdv"
-                                                }
-                                            },
-                                            "type": "object"
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        },
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "some token"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string",
+                                            "example": "some token"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 }
             }
@@ -922,23 +906,32 @@
                 ],
                 "summary": "Register",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "allOf": [
                                     {
+                                        "required": [
+                                            "name",
+                                            "email",
+                                            "password"
+                                        ],
                                         "properties": {
                                             "name": {
+                                                "description": "name",
                                                 "type": "string",
-                                                "example": "name_ex"
+                                                "example": "hello1234@mail.ru"
                                             },
                                             "email": {
+                                                "description": "email",
                                                 "type": "string",
-                                                "example": "email_ex"
+                                                "example": "hello1234@mail.ru"
                                             },
                                             "password": {
+                                                "description": "password",
                                                 "type": "string",
-                                                "example": "password_ex"
+                                                "example": "hello1234@mail.ru"
                                             }
                                         },
                                         "type": "object"
@@ -950,37 +943,35 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Successful login",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
-                                            "properties": {
-                                                "token_type": {
-                                                    "type": "string",
-                                                    "example": "Bearer"
-                                                },
-                                                "expires_in": {
-                                                    "type": "integer",
-                                                    "example": 3600
-                                                },
-                                                "access_token": {
-                                                    "type": "string",
-                                                    "example": "sdfsddsdsgfdweqwdv"
-                                                },
-                                                "refresh_token": {
-                                                    "type": "string",
-                                                    "example": "sdfsddsdsgfdweqwdv"
-                                                }
-                                            },
-                                            "type": "object"
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        },
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "some token"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string",
+                                            "example": "some token"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 }
             }
@@ -993,7 +984,7 @@
                 "summary": "Logout",
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Successful login",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1007,6 +998,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 },
                 "security": [
@@ -1021,17 +1015,22 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Refresh token",
+                "summary": "Refresh tokens",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "allOf": [
                                     {
+                                        "required": [
+                                            "refresh_token"
+                                        ],
                                         "properties": {
                                             "refresh_token": {
+                                                "description": "refresh_token",
                                                 "type": "string",
-                                                "example": "sdfgsssdfasdfqweqwcvx"
+                                                "example": "some_token"
                                             }
                                         },
                                         "type": "object"
@@ -1043,50 +1042,48 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Ok",
+                        "description": "Successful login",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
-                                            "properties": {
-                                                "token_type": {
-                                                    "type": "string",
-                                                    "example": "Bearer"
-                                                },
-                                                "expires_in": {
-                                                    "type": "integer",
-                                                    "example": 3600
-                                                },
-                                                "access_token": {
-                                                    "type": "string",
-                                                    "example": "sdfsddsdsgfdweqwdv"
-                                                },
-                                                "refresh_token": {
-                                                    "type": "string",
-                                                    "example": "sdfsddsdsgfdweqwdv"
-                                                }
-                                            },
-                                            "type": "object"
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        },
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "some token"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string",
+                                            "example": "some token"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server Error"
                     }
                 }
             }
         },
-        "/api/v1/skill": {
+        "/api/v1/skills": {
             "get": {
                 "tags": [
-                    "Skill"
+                    "Skills"
                 ],
-                "summary": "Index",
+                "summary": "List of skills",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "success",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1101,7 +1098,7 @@
                                                     },
                                                     "title": {
                                                         "type": "string",
-                                                        "example": "Skill"
+                                                        "example": "example"
                                                     }
                                                 },
                                                 "type": "object"
@@ -1115,7 +1112,7 @@
                                                 },
                                                 "last": {
                                                     "type": "string",
-                                                    "example": "http://localhost:8878/api/v1/skill?page=1"
+                                                    "example": "http://localhost:8878/api/v1/skill?page=2"
                                                 },
                                                 "prev": {
                                                     "type": "string",
@@ -1152,11 +1149,11 @@
                                                             },
                                                             "label": {
                                                                 "type": "string",
-                                                                "example": "1"
+                                                                "example": 1
                                                             },
                                                             "active": {
                                                                 "type": "boolean",
-                                                                "example": true
+                                                                "nullable": true
                                                             }
                                                         },
                                                         "type": "object"
@@ -1189,54 +1186,6 @@
                     },
                     "401": {
                         "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/skill/{id}": {
-            "get": {
-                "tags": [
-                    "Skill"
-                ],
-                "summary": "Show",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Skill ID",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "title": {
-                                                    "type": "string",
-                                                    "example": "Skill"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
                     }
                 },
                 "security": [
