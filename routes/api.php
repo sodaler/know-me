@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ChatController;
 use App\Http\Controllers\Api\v1\OAuthController;
 use App\Http\Controllers\Api\v1\PasswordController;
+use App\Http\Controllers\Api\v1\SearchController;
 use App\Http\Controllers\Api\v1\SkillController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
@@ -62,4 +63,8 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::get('chats/messages', [ChatController::class, 'chatMessages'])->name('chat.message.index');
 
     Route::get('users/{user}/chats', [UserController::class, 'indexChats'])->name('user.chat.index');
+});
+
+Route::group(['prefix' => 'v1'], function () {
+    Route::get('search', [SearchController::class, 'index'])->name('search.index');
 });

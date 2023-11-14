@@ -56,14 +56,15 @@ class Card extends Model
     {
         return [
             'title' => $this->title,
-            'skills' => $this->skills->only(['id, title']),
             'created_at' => $this->created_at,
-            'rating' => $this->rating
+            'rating' => $this->rating,
+            'skills' => $this->skills->pluck('slug'),
+            'categories' => $this->categories->pluck('slug')
         ];
     }
 
     public function searchableWith(): array
     {
-        return ['skills'];
+        return ['skills', 'categories'];
     }
 }

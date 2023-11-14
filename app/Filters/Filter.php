@@ -2,13 +2,13 @@
 
 namespace App\Filters;
 
-use Illuminate\Database\Eloquent\Builder;
+use Elastic\ScoutDriverPlus\Builders\QueryBuilderInterface;
 
 abstract class Filter
 {
     public function __construct(
-        protected readonly int $value
+        protected readonly mixed $value
     ) {}
 
-    abstract function handle(Builder $query): void;
+    abstract function handle(): QueryBuilderInterface;
 }

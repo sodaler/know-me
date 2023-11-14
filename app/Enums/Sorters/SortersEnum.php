@@ -2,17 +2,17 @@
 
 namespace App\Enums\Sorters;
 
-use App\Sorters\Card\RatingSorter;
+use App\Sorters\Card\ByRating;
 use App\Sorters\Sorter;
 
 enum SortersEnum: string
 {
-    case Rating = 'rating';
+    case ByRating = 'by_rating';
 
     public function createSorters(SortDirection $sortDirection): Sorter
     {
         return match ($this) {
-          self::Rating => new RatingSorter($sortDirection),
+          self::ByRating => new ByRating($sortDirection),
         };
     }
 }
