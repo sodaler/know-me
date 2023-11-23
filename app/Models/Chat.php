@@ -9,6 +9,8 @@ use MongoDB\Laravel\Relations\HasMany;
 
 class Chat extends Model
 {
+    use HasFactory;
+
     protected $connection = 'mongodb';
 
     protected $collection = 'chats';
@@ -19,8 +21,6 @@ class Chat extends Model
         'member_name',
         'creator_name',
     ];
-
-    use HasFactory;
 
     public function messages(): HasMany
     {

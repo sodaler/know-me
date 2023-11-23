@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -21,9 +22,9 @@ class Category extends Model
         'rating',
     ];
 
-    public function cards(): BelongsToMany
+    public function cards(): HasMany
     {
-        return $this->belongsToMany(Card::class);
+        return $this->hasMany(Card::class);
     }
 
     public function getSlugOptions(): SlugOptions
