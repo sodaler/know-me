@@ -3,13 +3,13 @@
 namespace App\Enums\Card;
 
 use App\Models\CardRequest;
-use App\States\CardRequest\AcceptedState;
-use App\States\CardRequest\CancelledState;
-use App\States\CardRequest\State;
-use App\States\CardRequest\CompletedState;
-use App\States\CardRequest\CreatedState;
-use App\States\CardRequest\InProgressState;
-use App\States\CardRequest\PendingState;
+use App\Utils\States\CardRequest\AcceptedState;
+use App\Utils\States\CardRequest\CancelledState;
+use App\Utils\States\CardRequest\CompletedState;
+use App\Utils\States\CardRequest\CreatedState;
+use App\Utils\States\CardRequest\InProgressState;
+use App\Utils\States\CardRequest\PendingState;
+use App\Utils\States\CardRequest\State;
 
 enum CardRequestsStatuses: string
 {

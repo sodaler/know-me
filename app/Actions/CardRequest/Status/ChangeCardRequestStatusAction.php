@@ -4,7 +4,7 @@ namespace App\Actions\CardRequest\Status;
 
 use App\Enums\Card\CardRequestsStatuses;
 use App\Models\CardRequest;
-use App\Transitions\CardRequest\AllowedTransitions;
+use App\Utils\Transitions\CardRequest\AllowedTransitions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 

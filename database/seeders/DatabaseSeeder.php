@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class DatabaseSeeder extends Seeder
 {
     protected array $toTruncate = [
-        'users', 'categories', 'skills', 'cards', 'card_skill', 'card_category',
+        'users', 'categories', 'skills', 'cards', 'card_skill',
     ];
 
     /**

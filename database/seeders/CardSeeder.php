@@ -14,15 +14,12 @@ class CardSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = Category::all();
         $skills = Skill::all();
 
         Card::factory()
-            ->count(20)
+            ->count(50)
             ->create()
-            ->each(function ($card) use ($categories, $skills) {
-                $card->categories()->attach($categories->random(rand(1, 3))->pluck('id')->toArray());
-
+            ->each(function ($card) use ($skills) {
                 $card->skills()->attach($skills->random(rand(1, 5))->pluck('id')->toArray());
             });
     }

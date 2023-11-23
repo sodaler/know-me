@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\CardController;
 use App\Http\Controllers\Api\v1\CardRequestController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ChatController;
+use App\Http\Controllers\Api\v1\FilterController;
 use App\Http\Controllers\Api\v1\OAuthController;
 use App\Http\Controllers\Api\v1\PasswordController;
 use App\Http\Controllers\Api\v1\SearchController;
@@ -66,5 +67,9 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
 });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::get('search', [SearchController::class, 'index'])->name('search.index');
+    Route::get('search', [SearchController::class, 'search'])->name('search.index');
+    Route::get('suggest', [SearchController::class, 'suggest'])->name('suggest.index');
+
+    Route::get('filter', [FilterController::class, 'filter'])->name('filter.index');
+    Route::get('facets', [FilterController::class, 'facets'])->name('facets.index');
 });
