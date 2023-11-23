@@ -3,128 +3,187 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Get(
- *   tags={"Card"},
- *   path="/api/v1/card",
- *   summary="Index",
- *   security={{"bearerAuth": {}}},
- *
- *   @OA\Response(
- *       response=200,
- *       description="OK",
- *
- *       @OA\JsonContent(
- *
- *           @OA\Property(property="data", type="array",
- *
- *               @OA\Items(
- *
- *                   @OA\Property(property="id", type="integer", example=1),
- *                   @OA\Property(property="title", type="string", example="qwe"),
- *                   @OA\Property(property="description", type="string", example="qwer"),
- *                   @OA\Property(property="image", type="string", example="qwer"),
- *                   @OA\Property(property="alt", type="string", example="qwe"),
- *                   @OA\Property(property="slug", type="string", example="qwe"),
- *                   @OA\Property(property="user", type="object",
- *                       @OA\Property(property="id", type="integer", example=4),
- *                       @OA\Property(property="name", type="string", example="admin"),
- *                       @OA\Property(property="phone", type="string", example=null),
- *                   ),
- *                   @OA\Property(property="skills", type="array",
- *
- *                       @OA\Items(
- *
- *                           @OA\Property(property="id", type="integer", example=1),
- *                           @OA\Property(property="title", type="string", example="skill"),
- *                       )
- *                   )
- *               )
- *           ),
- *           @OA\Property(property="links", type="object",
- *               @OA\Property(property="first", type="string", example="http://localhost:8878/api/v1/card?page=1"),
- *               @OA\Property(property="last", type="string", example="http://localhost:8878/api/v1/card?page=1"),
- *               @OA\Property(property="prev", type="string", nullable=true),
- *               @OA\Property(property="next", type="string", nullable=true),
- *           ),
- *           @OA\Property(property="meta", type="object",
- *               @OA\Property(property="current_page", type="integer", example=1),
- *               @OA\Property(property="from", type="integer", example=1),
- *               @OA\Property(property="last_page", type="integer", example=1),
- *               @OA\Property(property="links", type="array",
- *
- *                   @OA\Items(
- *
- *                       @OA\Property(property="url", type="string", nullable=true),
- *                       @OA\Property(property="label", type="string", example="&laquo; Previous"),
- *                       @OA\Property(property="active", type="boolean", example=false),
- *                   ),
- *
- *                   @OA\Items(
- *
- *                       @OA\Property(property="url", type="string", example="http://localhost:8878/api/v1/card?page=1"),
- *                       @OA\Property(property="label", type="string", example="1"),
- *                       @OA\Property(property="active", type="boolean", example=true),
- *                   ),
- *
- *                   @OA\Items(
- *
- *                       @OA\Property(property="url", type="string", nullable=true),
- *                       @OA\Property(property="label", type="string", example="Next &raquo;"),
- *                       @OA\Property(property="active", type="boolean", example=false),
- *                   ),
- *               ),
- *               @OA\Property(property="path", type="string", example="http://localhost:8878/api/v1/card"),
- *               @OA\Property(property="per_page", type="integer", example=10),
- *               @OA\Property(property="to", type="integer", example=1),
- *               @OA\Property(property="total", type="integer", example=1),
- *           ),
- *       )
- *   ),
- *
- *   @OA\Response(response=401, description="Unauthorized"),
- * )
- *
- * @OA\Get(
- *     path="/api/v1/card/{id}",
- *     summary="Show",
- *     tags={"Card"},
- *     security={{"bearerAuth": {}}},
- *
- *     @OA\Parameter(name="id", in="path", required=true, description="Card ID"),
- *
- *     @OA\Response(
- *         response=200,
- *         description="OK",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="object",
- *                 @OA\Property(property="id", type="integer", example=1),
- *                 @OA\Property(property="title", type="string", example="qwe"),
- *                 @OA\Property(property="description", type="string", example="qwer"),
- *                 @OA\Property(property="image", type="string", example="qwer"),
- *                 @OA\Property(property="alt", type="string", example="qwe"),
- *                 @OA\Property(property="slug", type="string", example="qwe"),
- *                 @OA\Property(property="user", type="object",
- *                     @OA\Property(property="id", type="integer", example=4),
- *                     @OA\Property(property="name", type="string", example="admin"),
- *                     @OA\Property(property="phone", type="string", example=null),
- *                 ),
- *                 @OA\Property(property="skills", type="array",
- *
- *                     @OA\Items(
- *
- *                         @OA\Property(property="id", type="integer", example=1),
- *                         @OA\Property(property="title", type="string", example="skill"),
- *                     )
- *                 )
- *             )
- *         )
- *     )
- * )
- */
+#[
+    OA\Get(
+        path: "/api/v1/cards",
+        summary: "Index",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        tags: ["Cards"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Success",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "id",
+                            type: "integer",
+                            example: 1,
+                        ),
+                        new OA\Property(
+                            property: "title",
+                            type: "string",
+                            example: "title",
+                        ),
+                        new OA\Property(
+                            property: "description",
+                            type: "string",
+                            example: "description",
+                        ),
+                        new OA\Property(
+                            property: "image",
+                            type: "string",
+                            example: "img.png",
+                        ),
+                        new OA\Property(
+                            property: "alt",
+                            type: "string",
+                            example: "image-alt",
+                        ),
+                        new OA\Property(
+                            property: "slug",
+                            type: "string",
+                            example: "title-slug",
+                        ),
+                        new OA\Property(property: "user", description: "Card's user", type: "array", items: new OA\Items(
+                            properties: [
+                                new OA\Property(
+                                    property: "id",
+                                    type: "integer",
+                                    example: 1
+                                ),
+                                new OA\Property(
+                                    property: "name",
+                                    type: "string",
+                                    example: "Vasya"
+                                ),
+                            ],
+                        )),
+                        new OA\Property(property: "skills", description: "skills", type: "array",
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(
+                                        property: "id",
+                                        type: "integer",
+                                        example: 1,
+                                    ),
+                                    new OA\Property(
+                                        property: "title",
+                                        type: "string",
+                                        example: "card title"
+                                    ),
+                                ],
+                            ),
+                        ),
+                        new OA\Property(
+                            property: "status",
+                            type: "string",
+                            example: "created"
+                        ),
+                    ],
+                ),
+            ),
+        ],
+    ),
+
+    OA\Get(
+        path: "/api/v1/cards/{card}",
+        summary: "Show",
+        security: [
+            [
+                "bearerAuth" => []
+            ]
+        ],
+        tags: ["Cards"],
+        parameters: [
+            new OA\Parameter(
+                name: "card",
+                description: "Card's id",
+                in: "path",
+                required: true,
+                example: 1,
+            ),
+        ],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Success",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "id",
+                            type: "integer",
+                            example: 1,
+                        ),
+                        new OA\Property(
+                            property: "title",
+                            type: "string",
+                            example: "title",
+                        ),
+                        new OA\Property(
+                            property: "description",
+                            type: "string",
+                            example: "description",
+                        ),
+                        new OA\Property(
+                            property: "image",
+                            type: "string",
+                            example: "img.png",
+                        ),
+                        new OA\Property(
+                            property: "alt",
+                            type: "string",
+                            example: "image-alt",
+                        ),
+                        new OA\Property(
+                            property: "slug",
+                            type: "string",
+                            example: "title-slug",
+                        ),
+                        new OA\Property(property: "user", description: "Card's user", type: "array", items: new OA\Items(
+                            properties: [
+                                new OA\Property(
+                                    property: "id",
+                                    type: "integer",
+                                    example: 1
+                                ),
+                                new OA\Property(
+                                    property: "name",
+                                    type: "string",
+                                    example: "Vasya"
+                                ),
+                            ],
+                        )),
+                        new OA\Property(property: "skills", description: "skills", type: "array",
+                            items: new OA\Items(
+                                properties: [
+                                    new OA\Property(
+                                        property: "id",
+                                        type: "integer",
+                                        example: 1,
+                                    ),
+                                    new OA\Property(
+                                        property: "title",
+                                        type: "string",
+                                        example: "card title"
+                                    ),
+                                ],
+                            ),
+                        ),
+                        new OA\Property(
+                            property: "status",
+                            type: "string",
+                            example: "created"
+                        ),
+                    ],
+                ),
+            ),
+        ],
+    ),
+]
 class CardController extends Controller
 {
     //

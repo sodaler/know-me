@@ -3,130 +3,179 @@
 namespace App\Http\Controllers\Swagger\v1;
 
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Post(
- *     path="/api/v1/oauth/login",
- *     summary="Login",
- *     tags={"Auth"},
- *
- *     @OA\RequestBody(
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="email", type="string", example="email@mail.com"),
- *                     @OA\Property(property="password", type="string", example="password"),
- *                 )
- *             }
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="object",
- *                 @OA\Property(property="token_type", type="string", example="Bearer"),
- *                 @OA\Property(property="expires_in", type="integer", example=3600),
- *                 @OA\Property(property="access_token", type="string", example="sdfsddsdsgfdweqwdv"),
- *                 @OA\Property(property="refresh_token", type="string", example="sdfsddsdsgfdweqwdv"),
- *             ),
- *         ),
- *     ),
- * ),
- *
- * @OA\Post(
- *     path="/api/v1/oauth/register",
- *     summary="Register",
- *     tags={"Auth"},
- *
- *     @OA\RequestBody(
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="name", type="string", example="name_ex"),
- *                     @OA\Property(property="email", type="string", example="email_ex"),
- *                     @OA\Property(property="password", type="string", example="password_ex"),
- *                 )
- *             }
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="object",
- *                 @OA\Property(property="token_type", type="string", example="Bearer"),
- *                 @OA\Property(property="expires_in", type="integer", example=3600),
- *                 @OA\Property(property="access_token", type="string", example="sdfsddsdsgfdweqwdv"),
- *                 @OA\Property(property="refresh_token", type="string", example="sdfsddsdsgfdweqwdv"),
- *             ),
- *         ),
- *     ),
- * ),
- *
- * @OA\Post(
- *     path="/api/v1/oauth/logout",
- *     summary="Logout",
- *     tags={"Auth"},
- *     security={{ "bearerAuth": {} }},
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="message", type="string", example="Successfully logged out"),
- *         ),
- *     ),
- * ),
- *
- * @OA\Post(
- *     path="/api/v1/oauth/refresh",
- *     summary="Refresh token",
- *     tags={"Auth"},
- *
- *     @OA\RequestBody(
- *
- *         @OA\JsonContent(
- *             allOf={
- *
- *                 @OA\Schema(
- *
- *                     @OA\Property(property="refresh_token", type="string", example="sdfgsssdfasdfqweqwcvx"),
- *                 )
- *             }
- *         )
- *     ),
- *
- *     @OA\Response(
- *         response=200,
- *         description="Ok",
- *
- *         @OA\JsonContent(
- *
- *             @OA\Property(property="data", type="object",
- *                 @OA\Property(property="token_type", type="string", example="Bearer"),
- *                 @OA\Property(property="expires_in", type="integer", example=3600),
- *                 @OA\Property(property="access_token", type="string", example="sdfsddsdsgfdweqwdv"),
- *                 @OA\Property(property="refresh_token", type="string", example="sdfsddsdsgfdweqwdv"),
- *             ),
- *         ),
- *     ),
- * )
- */
+#[
+    OA\Post(
+        path: "/api/v1/oauth/login",
+        summary: "Login",
+        requestBody: new OA\RequestBody(required: true,
+            content: new OA\JsonContent(
+                allOf: [
+                    new OA\Schema(
+                        required: ["email", "password"],
+                        properties: [
+                            new OA\Property(property: "email", description: "email", type: "string", example: "hello1234@mail.ru"),
+                            new OA\Property(property: "password", description: "password", type: "string", example: "hello1234@mail.ru"),
+                        ],
+                    ),
+                ],
+            ),
+        ),
+        tags: ["Auth"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Successful login",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "token_type",
+                            type: "string",
+                            example: "Bearer"
+                        ),
+                        new OA\Property(
+                            property: "expires_in",
+                            type: "integer",
+                            example: 3600
+                        ),
+                        new OA\Property(
+                            property: "access_token",
+                            type: "string",
+                            example: "some token"
+                        ),
+                        new OA\Property(
+                            property: "refresh_token",
+                            type: "string",
+                            example: "some token"
+                        ),
+                    ],
+                ),
+            ),
+            new OA\Response(response: Response::HTTP_INTERNAL_SERVER_ERROR, description: "Server Error"),
+        ],
+    ),
+
+    OA\Post(
+        path: "/api/v1/oauth/register",
+        summary: "Register",
+        requestBody: new OA\RequestBody(required: true,
+            content: new OA\JsonContent(
+                allOf: [
+                    new OA\Schema(
+                        required: ["name", "email", "password"],
+                        properties: [
+                            new OA\Property(property: "name", description: "name", type: "string", example: "hello1234@mail.ru"),
+                            new OA\Property(property: "email", description: "email", type: "string", example: "hello1234@mail.ru"),
+                            new OA\Property(property: "password", description: "password", type: "string", example: "hello1234@mail.ru"),
+                        ],
+                    ),
+                ],
+            ),
+        ),
+        tags: ["Auth"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Successful login",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "token_type",
+                            type: "string",
+                            example: "Bearer"
+                        ),
+                        new OA\Property(
+                            property: "expires_in",
+                            type: "integer",
+                            example: 3600
+                        ),
+                        new OA\Property(
+                            property: "access_token",
+                            type: "string",
+                            example: "some token"
+                        ),
+                        new OA\Property(
+                            property: "refresh_token",
+                            type: "string",
+                            example: "some token"
+                        ),
+                    ],
+                ),
+            ),
+            new OA\Response(response: Response::HTTP_INTERNAL_SERVER_ERROR, description: "Server Error"),
+        ],
+    ),
+
+    OA\Post(
+        path: "/api/v1/oauth/logout",
+        summary: "Logout",
+        security: [
+            [
+                'bearerAuth' => []
+            ]
+        ],
+        tags: ["Auth"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Successful login",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "message",
+                            type: "string",
+                            example: "Successfully logged out"
+                        ),
+                    ],
+                ),
+            ),
+            new OA\Response(response: Response::HTTP_INTERNAL_SERVER_ERROR, description: "Server Error"),
+        ],
+    ),
+
+    OA\Post(
+        path: "/api/v1/oauth/refresh",
+        summary: "Refresh tokens",
+        requestBody: new OA\RequestBody(required: true,
+            content: new OA\JsonContent(
+                allOf: [
+                    new OA\Schema(
+                        required: ["refresh_token"],
+                        properties: [
+                            new OA\Property(property: "refresh_token", description: "refresh_token", type: "string", example: "some_token"),
+                        ],
+                    ),
+                ],
+            ),
+        ),
+        tags: ["Auth"],
+        responses: [
+            new OA\Response(response: Response::HTTP_OK, description: "Successful login",
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(
+                            property: "token_type",
+                            type: "string",
+                            example: "Bearer"
+                        ),
+                        new OA\Property(
+                            property: "expires_in",
+                            type: "integer",
+                            example: 3600
+                        ),
+                        new OA\Property(
+                            property: "access_token",
+                            type: "string",
+                            example: "some token"
+                        ),
+                        new OA\Property(
+                            property: "refresh_token",
+                            type: "string",
+                            example: "some token"
+                        ),
+                    ],
+                ),
+            ),
+            new OA\Response(response: Response::HTTP_INTERNAL_SERVER_ERROR, description: "Server Error"),
+        ],
+    ),
+]
 class OAuthController extends Controller
 {
 }

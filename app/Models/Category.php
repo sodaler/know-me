@@ -27,6 +27,11 @@ class Category extends Model
         return $this->hasMany(Card::class);
     }
 
+    public function media(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

@@ -2,55 +2,49 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Actions\User\CreateUserAction;
 use App\Enums\Auth\GrantTypeEnums;
-use App\Enums\Http\MethodEnums;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Auth\AuthService;
+use App\Services\User\UserService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class OAuthController extends Controller
 {
-    public function __construct(
-        private readonly AuthService $authService
-    ) {
-    }
-
     /**
      * @throws Exception
      */
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request, AuthService $authService): JsonResponse
     {
         return response()->json(
-            $this->authService
-                ->getTokensByCredentials($request->validated())
+            $authService->getTokensByCredentials($request->validated())
         );
     }
 
     /**
      * @throws Exception
      */
-    public function register(RegisterRequest $request, CreateUserAction $createUserAction): JsonResponse
+    public function register(RegisterRequest $request, UserService $userService, AuthService $authService): JsonResponse
     {
-        return response()->json(
-            ...$createUserAction->execute($request->validated())
+        return response()->json( //TODO. No key, but is new user. Need to full secu for action
+            ...$userService->store($request->validated(), $authService)
         );
     }
 
     /**
      * @throws Exception
      */
-    public function refresh(Request $request): Response
+    public function refresh(Request $request, AuthService $authService): Response
     {
-        $response = $this->authService->handle(
-            $this->authService->generateTokens(
+        $response = $authService->handle(
+            $authService->generateTokens(
                 $request->only('refresh_token'),
-                MethodEnums::POST->value,
+                HttpRequest::METHOD_GET,
                 GrantTypeEnums::REFRESH_TOKEN->value
             )
         );

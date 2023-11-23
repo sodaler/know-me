@@ -8,9 +8,9 @@ use App\Utils\Transitions\CardRequest\AllowedTransitions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class ChangeCardRequestStatusAction
+final class ChangeCardRequestStatusAction
 {
-    public function execute(CardRequest|Model $cardRequest, CardRequestsStatuses $nextStatus): CardRequest
+    public static function execute(CardRequest|Model $cardRequest, CardRequestsStatuses $nextStatus): CardRequest
     {
         return DB::transaction(function () use ($cardRequest, $nextStatus) {
             $transition = AllowedTransitions::getTransition($cardRequest->status, $nextStatus);
