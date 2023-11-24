@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\v1\PasswordController;
 use App\Http\Controllers\Api\v1\SearchController;
 use App\Http\Controllers\Api\v1\SkillController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\VideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +64,9 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::get('chats/messages', [ChatController::class, 'chatMessages'])->name('chat.message.index');
 
     Route::get('users/{user}/chats', [UserController::class, 'indexChats'])->name('user.chat.index');
+
+    Route::post('/agora/token', [VideoController::class, 'token'])->name('video.token');
+    Route::post('/agora/call-user', [VideoController::class, 'callUser'])->name('video.call-user');
 });
 
 Route::group(['prefix' => 'v1'], function () {
