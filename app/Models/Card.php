@@ -13,7 +13,8 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
- * @property int $id
+ * @property-read int $id
+ * @property-read CardRequest $request
  */
 class Card extends Model
 {
