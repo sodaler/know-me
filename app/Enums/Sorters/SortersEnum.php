@@ -2,8 +2,8 @@
 
 namespace App\Enums\Sorters;
 
-use App\Sorters\Card\ByRating;
-use App\Sorters\Sorter;
+use App\Utils\Sorters\Card\ByRating;
+use App\Utils\Sorters\Sorter;
 
 enum SortersEnum: string
 {

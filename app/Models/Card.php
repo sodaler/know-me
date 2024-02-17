@@ -40,9 +40,9 @@ class Card extends Model
         return $this->morphMany(Media::class, 'mediable');
     }
 
-    public function categories(): BelongsToMany
+    public function category(): BelongsTo
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function skills(): BelongsToMany
@@ -68,13 +68,14 @@ class Card extends Model
             'title' => $this->title,
             'created_at' => $this->created_at,
             'rating' => $this->rating,
-            'skills' => $this->skills->pluck('slug'),
-            'categories' => $this->categories->pluck('slug')
+            'skills_id' => $this->skills->pluck('id'),
+            'skills_title' => $this->skills->pluck('slug'),
+            'category' => $this->category->id
         ];
     }
 
     public function searchableWith(): array
     {
-        return ['skills', 'categories'];
+        return ['skills', 'category'];
     }
 }
